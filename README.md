@@ -1,16 +1,11 @@
 # morfology_finder
+to deploy
+make deploy OUTPUT=morfology
+
 
 Finder for ukrainian words
 
-## Getting Started
+#GPT request
+#  flutter use drift with already exidting file data.db
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#DB viewer https://inloop.github.io/sqlite-viewer/
