@@ -1,7 +1,6 @@
-# morphology_finder
+# morfology_finder
 to deploy
-make deploy OUTPUT=morphology
-
+make deploy OUTPUT=morfology
 
 Finder for ukrainian words
 
