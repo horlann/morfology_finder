@@ -1,4 +1,4 @@
-name: morfology_finder
+name: morphology_finder
 description: "Finder for ukrainian words"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -33,6 +33,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   drift_dev: ^2.14.0
   build_runner: ^2.4.6
+  auto_route_generator: ^9.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
