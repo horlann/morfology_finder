@@ -10,8 +10,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
       body: Center(
         child: Container(
@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: screenHeight*0.04),
+              SizedBox(height: screenHeight * 0.04),
               ElevatedButton(
                 onPressed: () {
                   context.router.push(WordSearchRoute());

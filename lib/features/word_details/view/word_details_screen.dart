@@ -1,60 +1,21 @@
 import 'package:flutter/material.dart';
+
 import 'package:auto_route/auto_route.dart';
-import 'package:morphology_finder/router/router.dart';
 
 @RoutePage()
-class WordSearchScreen extends StatefulWidget {
-  const WordSearchScreen({super.key});
+class WordDetailsScreen extends StatefulWidget {
+  const WordDetailsScreen({
+    super.key,
+    required this.word,
+  });
+
+  final String word;
 
   @override
-  State<WordSearchScreen> createState() => _WordSearchScreenState();
+  State<WordDetailsScreen> createState() => _WordDetailsScreenState();
 }
 
-class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
-  final TextEditingController _searchController = TextEditingController();
-
-  final List<String> _words = [
-    'Сонце',
-    'Мрія',
-    'Ліс',
-    'Книга',
-    'Дерево',
-    'Річка',
-    'Мова',
-    'Вишня',
-    'Зірка',
-    'Гора',
-  ];
-
-  List<String> _searchResults = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _searchResults = _words;
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void _searchWord(String query) {
-    final results = _words
-        .where((word) => word.toLowerCase().contains(query.toLowerCase()))
-        .take(5)
-        .toList();
-
-    setState(() {
-      _searchResults = results;
-    });
-  }
-
-  void _onWordTap(String word) {
-    context.router.push(WordDetailsRoute(word: word));
-  }
-
+class _WordDetailsScreenState extends State<WordDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
@@ -83,7 +44,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 32),
                   child: const Text(
-                    'Пошук',
+                    'Морфологічне значення слова',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 36,
@@ -117,10 +78,26 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                 vertical: verticalPadding,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildSearchField(),
-                  const SizedBox(height: 20),
-                  Expanded(child: _buildSearchResults()),
+                  SizedBox(height: 120),
+                  Text(
+                    'Ви обрали слово',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  Text(
+                    widget.word,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -148,56 +125,6 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildSearchField() {
-    return TextField(
-      controller: _searchController,
-      onChanged: _searchWord,
-      decoration: InputDecoration(
-        labelText: 'Пошук слова',
-        labelStyle: TextStyle(
-          color: Colors.black.withAlpha(100),
-          fontSize: 16,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.grey, width: 1),
-        ),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () => _searchWord(_searchController.text),
-        ),
-      ),
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  Widget _buildSearchResults() {
-    if (_searchResults.isEmpty) {
-      return Center(
-        child: Text(
-          'Немає результатів для вашого запиту.',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-        ),
-      );
-    }
-
-    return ListView.builder(
-      itemCount: _searchResults.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            _searchResults[index],
-            style: const TextStyle(color: Colors.black),
-          ),
-          onTap: () => _onWordTap(_searchResults[index]),
-        );
-      },
     );
   }
 }

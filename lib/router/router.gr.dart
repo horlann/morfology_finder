@@ -27,6 +27,43 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [WordDetailsScreen]
+class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
+  WordDetailsRoute({
+    Key? key,
+    required String word,
+    List<PageRouteInfo>? children,
+  }) : super(
+         WordDetailsRoute.name,
+         args: WordDetailsRouteArgs(key: key, word: word),
+         initialChildren: children,
+       );
+
+  static const String name = 'WordDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<WordDetailsRouteArgs>();
+      return WordDetailsScreen(key: args.key, word: args.word);
+    },
+  );
+}
+
+class WordDetailsRouteArgs {
+  const WordDetailsRouteArgs({this.key, required this.word});
+
+  final Key? key;
+
+  final String word;
+
+  @override
+  String toString() {
+    return 'WordDetailsRouteArgs{key: $key, word: $word}';
+  }
+}
+
+/// generated route for
 /// [WordSearchScreen]
 class WordSearchRoute extends PageRouteInfo<void> {
   const WordSearchRoute({List<PageRouteInfo>? children})

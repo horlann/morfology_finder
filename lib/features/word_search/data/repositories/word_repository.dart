@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'package:morphology_finder/features/word_search/data/models/word.dart';
 
 class WordRepository {
-  Future<WordModel> getWordId(Map<String, dynamic> id) async {
+  Future<WordModel> getWordId(String query) async {
     await Future.delayed(Duration(milliseconds: 500));
     String mockData = '''
 [
   {
-    "id": 1,
+    "id": 21,
     "basic_word": "абсолютність",
     "split_word": "абсолю́т/н/ість",  
   }
