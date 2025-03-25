@@ -25,3 +25,19 @@ class HomeRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [WordSearchScreen]
+class WordSearchRoute extends PageRouteInfo<void> {
+  const WordSearchRoute({List<PageRouteInfo>? children})
+    : super(WordSearchRoute.name, initialChildren: children);
+
+  static const String name = 'WordSearchRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const WordSearchScreen();
+    },
+  );
+}

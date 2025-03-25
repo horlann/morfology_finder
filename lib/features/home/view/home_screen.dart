@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 import 'package:auto_route/auto_route.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:morphology_finder/router/router.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -71,13 +71,16 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 200),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.router.push(WordSearchRoute());
+                },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 48,
                     vertical: 24,
                   ),
-                  textStyle: TextStyle(fontSize: 36,
+                  textStyle: TextStyle(
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
