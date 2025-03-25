@@ -77,7 +77,27 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
         title: Row(
           children: [
             const SizedBox(width: 12),
-            _buildBackButton(context),
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  color: Colors.grey.withAlpha(20),
+                  child: Center(
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        context.router.maybePop();
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: Padding(
@@ -96,83 +116,54 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
           ],
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double horizontalPadding = screenWidth > 600 ? 200 : 20;
-          double verticalPadding = screenHeight > 600 ? 100 : 20;
-
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.blue.shade100, Colors.pink.shade100],
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizontalPadding,
-                vertical: verticalPadding,
-              ),
-              child: Column(
-                children: [
-                  _buildSearchField(),
-                  const SizedBox(height: 20),
-                  Expanded(child: _buildSearchResults()),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildBackButton(BuildContext context) {
-    return SizedBox(
-      width: 40,
-      height: 40,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+      body: Center(
         child: Container(
-          color: Colors.grey.withAlpha(20),
-          child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.grey),
-              onPressed: () {
-                context.router.maybePop();
-              },
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue.shade100, Colors.pink.shade100],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.1,
+              vertical: screenHeight * 0.1,
+            ),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _searchController,
+                  onChanged: _searchWord,
+                  decoration: InputDecoration(
+                    labelText: 'Пошук слова',
+                    labelStyle: TextStyle(
+                      color: Colors.black.withAlpha(100),
+                      fontSize: 16,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 1),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () => _searchWord(_searchController.text),
+                    ),
+                  ),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Expanded(child: _buildSearchResults()),
+              ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildSearchField() {
-    return TextField(
-      controller: _searchController,
-      onChanged: _searchWord,
-      decoration: InputDecoration(
-        labelText: 'Пошук слова',
-        labelStyle: TextStyle(
-          color: Colors.black.withAlpha(100),
-          fontSize: 16,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.grey, width: 1),
-        ),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () => _searchWord(_searchController.text),
-        ),
-      ),
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
       ),
     );
   }

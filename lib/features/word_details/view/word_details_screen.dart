@@ -38,7 +38,25 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
         title: Row(
           children: [
             const SizedBox(width: 12),
-            _buildBackButton(context),
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  color: Colors.grey.withAlpha(20),
+                  child: Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_new,
+                          color: Colors.grey),
+                      onPressed: () {
+                        context.router.maybePop();
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: Padding(
@@ -57,70 +75,44 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
           ],
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double horizontalPadding = screenWidth > 600 ? 200 : 20;
-          double verticalPadding = screenHeight > 600 ? 100 : 20;
-
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.blue.shade100, Colors.pink.shade100],
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizontalPadding,
-                vertical: verticalPadding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 120),
-                  Text(
-                    'Ви обрали слово',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Text(
-                    widget.word,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildBackButton(BuildContext context) {
-    return SizedBox(
-      width: 40,
-      height: 40,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+      body: Center(
         child: Container(
-          color: Colors.grey.withAlpha(20),
-          child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.grey),
-              onPressed: () {
-                context.router.maybePop();
-              },
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue.shade100, Colors.pink.shade100],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.1,
+              vertical: screenHeight * 0.1,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 120),
+                Text(
+                  'Ви обрали слово',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 40),
+                Text(
+                  widget.word,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
