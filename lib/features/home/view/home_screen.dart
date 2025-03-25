@@ -10,6 +10,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(
         child: Container(
@@ -28,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               Text(
                 'Л. М. Полюга',
                 style: GoogleFonts.merriweather(
-                  fontSize: 40,
+                  fontSize: screenWidth > 600 ? 40 : 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -39,8 +41,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Positioned(
                     child: Container(
-                      width: 540,
-                      height: 800,
+                      width: screenWidth * 0.4,
+                      height: screenHeight * 0.75,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 4),
                       ),
@@ -50,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                     'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.oldStandardTt(
-                      fontSize: 72,
+                      fontSize: screenWidth > 600 ? 68 : 48,
                       fontWeight: FontWeight.bold,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
@@ -62,25 +64,25 @@ class HomeScreen extends StatelessWidget {
                     'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.oldStandardTt(
-                      fontSize: 72,
+                      fontSize: screenWidth > 600 ? 68 : 48,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 200),
+              SizedBox(height: screenHeight*0.04),
               ElevatedButton(
                 onPressed: () {
                   context.router.push(WordSearchRoute());
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 48,
-                    vertical: 24,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04,
+                    vertical: screenHeight * 0.02,
                   ),
                   textStyle: TextStyle(
-                    fontSize: 36,
+                    fontSize: screenWidth > 600 ? 36 : 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
