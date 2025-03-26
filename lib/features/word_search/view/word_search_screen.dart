@@ -113,7 +113,8 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                           }
                         },
                       ),
-                    ),                  ],
+                    ),
+                  ],
                 ),
               ),
             ),
