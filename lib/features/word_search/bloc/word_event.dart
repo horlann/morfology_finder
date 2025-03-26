@@ -16,7 +16,7 @@ class WordSelectEvent extends WordEvent {
     this.wordModel,
   );
 
-  final String wordModel;
+  final WordModel wordModel;
 }
 
 class SelectEvent extends WordEvent {

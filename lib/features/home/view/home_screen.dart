@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_web_worker_example/features/main/view/main_screen.dart';
+import 'package:flutter_web_worker_example/features/spreadsheet/view/spreadsheet_screen.dart';
+import 'package:flutter_web_worker_example/features/word_search/view/word_search_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:morphology_finder/features/main/view/main_screen.dart';
-
-import 'package:morphology_finder/features/spreadsheet/view/spreadsheet_screen.dart';
-import 'package:morphology_finder/features/word_search/view/word_search_screen.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {

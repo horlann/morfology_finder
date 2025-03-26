@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
-
-import 'package:morphology_finder/features/home/view/home_screen.dart';
-import 'package:morphology_finder/features/introduce/view/introduce_screen.dart';
-import 'package:morphology_finder/features/word_details/view/word_details_screen.dart';
-import 'package:morphology_finder/features/word_search/view/word_search_screen.dart';
+import 'package:flutter_web_worker_example/features/home/view/home_screen.dart';
+import 'package:flutter_web_worker_example/features/introduce/view/introduce_screen.dart';
+import 'package:flutter_web_worker_example/features/word_details/view/word_details_screen.dart';
+import 'package:flutter_web_worker_example/features/word_search/view/word_search_screen.dart';
 
 part 'router.gr.dart';
 

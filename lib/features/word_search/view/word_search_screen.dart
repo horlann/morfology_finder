@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:morphology_finder/core/router/router.dart';
-import 'package:morphology_finder/features/word_search/bloc/word_bloc.dart';
-import 'package:morphology_finder/features/word_search/data/repositories/word_repository.dart';
+import 'package:flutter_web_worker_example/core/router/router.dart';
+import 'package:flutter_web_worker_example/features/word_search/bloc/word_bloc.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/repositories/word_repository.dart';
 
 @RoutePage()
 class WordSearchScreen extends StatefulWidget {
@@ -16,42 +17,15 @@ class WordSearchScreen extends StatefulWidget {
 class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
   final TextEditingController _searchController = TextEditingController();
 
-  final List<String> _words = [
-    'Сонце',
-    'Мрія',
-    'Ліс',
-    'Книга',
-    'Дерево',
-    'Річка',
-    'Мова',
-    'Вишня',
-    'Зірка',
-    'Гора',
-  ];
-
-  List<String> _searchResults = [];
-
   @override
   void initState() {
     super.initState();
-    _searchResults = _words;
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
-  }
-
-  void _searchWord(String query) {
-    final results = _words
-        .where((word) => word.toLowerCase().contains(query.toLowerCase()))
-        .take(5)
-        .toList();
-
-    setState(() {
-      _searchResults = results;
-    });
   }
 
   @override
@@ -137,7 +111,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                 children: [
                   TextField(
                     controller: _searchController,
-                    onChanged: _searchWord,
+                    onChanged: (value) {},
                     decoration: InputDecoration(
                       labelText: 'Пошук слова',
                       labelStyle: TextStyle(
@@ -150,9 +124,10 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                             const BorderSide(color: Colors.grey, width: 1),
                       ),
                       suffixIcon: IconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () => _searchWord(_searchController.text),
-                      ),
+                          icon: const Icon(Icons.search),
+                          onPressed: () =>
+                              () {} // _searchWord(_searchController.text),
+                          ),
                     ),
                     style: const TextStyle(
                       fontSize: 24,
@@ -160,7 +135,17 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Expanded(child: _buildSearchResults()),
+                  Expanded(
+                    child: BlocBuilder<WordBloc, WordState>(
+                      builder: (context, state) {
+                        if (state is WordLoadedState) {
+                          return _buildSearchResults((state).words);
+                        } else {
+                          return _buildSearchResults([]);
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -170,8 +155,8 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     );
   }
 
-  Widget _buildSearchResults() {
-    if (_searchResults.isEmpty) {
+  Widget _buildSearchResults(List<WordModel> words) {
+    if (words.isEmpty) {
       return Center(
         child: Text(
           'Немає результатів для вашого запиту.',
@@ -181,17 +166,18 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     }
 
     return ListView.builder(
-      itemCount: _searchResults.length,
+      itemCount: words.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            _searchResults[index],
+            words[index].wordBasicWord ?? "",
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () {
-            final word = _searchResults[index];
+            final word = words[index];
             context.read<WordBloc>().add(WordSelectEvent(word));
-            context.router.push(WordDetailsRoute(word: word));
+            context.router
+                .push(WordDetailsRoute(word: word.wordBasicWord ?? ''));
           },
         );
       },

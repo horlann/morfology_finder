@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
-import 'package:drift/web.dart';
-import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter/services.dart';
 
 part 'db.g.dart';
@@ -20,7 +18,7 @@ class WordItems extends Table {
 
 @DriftDatabase(tables: [WordItems])
 class Database extends _$Database {
-  Database(DatabaseConnection super.e);
+  Database(super.executor);
 
   @override
   int get schemaVersion => 1;
