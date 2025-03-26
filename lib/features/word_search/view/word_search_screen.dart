@@ -28,21 +28,6 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     super.dispose();
   }
 
-  void _searchWord(String query) {
-    final results = _words
-        .where((word) => word.toLowerCase().contains(query.toLowerCase()))
-        .take(5)
-        .toList();
-
-    setState(() {
-      _searchResults = results;
-    });
-  }
-
-  void _onWordTap(String word) {
-    context.router.push(WordDetailsRoute(word: word));
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
@@ -80,7 +65,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                   children: [
                     TextField(
                       controller: _searchController,
-                      onChanged: _searchWord,
+                      onChanged: (c) {},
                       decoration: InputDecoration(
                         labelText: 'Пошук слова',
                         labelStyle: TextStyle(
@@ -94,7 +79,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                         ),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.search),
-                          onPressed: () => _searchWord(_searchController.text),
+                          onPressed: () {},
                         ),
                       ),
                       style: const TextStyle(
