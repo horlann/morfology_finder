@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+
 import 'package:morphology_finder/features/home/view/home_screen.dart';
+import 'package:morphology_finder/features/introduce/view/introduce_screen.dart';
 import 'package:morphology_finder/features/word_details/view/word_details_screen.dart';
 import 'package:morphology_finder/features/word_search/view/word_search_screen.dart';
 
@@ -13,12 +15,12 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes {
     return [
       AutoRoute(
-        page: HomeRoute.page,
+        page: IntroduceRoute.page,
         path: '/',
       ),
       AutoRoute(
-        page: WordSearchRoute.page,
-        path: '/word_search',
+        page: HomeRoute.page,
+        path: '/main',
       ),
       AutoRoute(
         page: WordDetailsRoute.page,
