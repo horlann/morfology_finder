@@ -1,1 +1,1 @@
-//https://drift.simonbinder.eu/setup/#database-class
+import 'package:drift/drift.dart';

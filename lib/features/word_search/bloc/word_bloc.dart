@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:morphology_finder/features/word_search/data/models/word.dart';
 import 'package:morphology_finder/features/word_search/data/repositories/word_repository.dart';
+import 'package:morphology_finder/main.dart';
 
 part 'word_event.dart';
-
 part 'word_state.dart';
 
 class WordBloc extends Bloc<WordEvent, WordState> {
@@ -45,7 +44,10 @@ class WordBloc extends Bloc<WordEvent, WordState> {
 
 Future<void> _onWordSelect(
     WordSelectEvent event, Emitter<WordState> emit) async {
-  // debugPrint('Location Select Event');
+  // final dbFile = await getDatabaseFile();
+  final allWords = await (db.select(db.wordItems)..limit(20)).get();
+  // print(allWords);
+  // // debugPrint('Location Select Event');
   // emit(LocationSearchLoadingState());
   //
   // // try {
