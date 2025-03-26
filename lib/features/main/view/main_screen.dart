@@ -13,23 +13,38 @@ class _MainScreenState extends State<MainScreen> {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
-      body: Container(
-        width: screenWidth,
-        height: screenHeight,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade100, Colors.pink.shade100],
+      body: Stack(
+        children: [
+          Container(
+            width: screenWidth,
+            height: screenHeight,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue.shade100, Colors.pink.shade100],
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'MainScreen',
+                style: TextStyle(fontSize: 40),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
-        ),
-        child: Center(
-          child: Text(
-            'MainScreen',
-            style: TextStyle(fontSize: 40),
-            textAlign: TextAlign.center,
+          Center(
+            child: Container(
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.9,
+
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
