@@ -55,6 +55,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     context.router.push(WordDetailsRoute(word: word));
   }
 
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
