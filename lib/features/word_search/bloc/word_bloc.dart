@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:morphology_finder/features/word_search/data/models/word.dart';
-import 'package:morphology_finder/features/word_search/data/repositories/word_repository.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/repositories/word_repository.dart';
+import 'package:flutter_web_worker_example/main.dart';
 
 part 'word_event.dart';
-
 part 'word_state.dart';
 
 class WordBloc extends Bloc<WordEvent, WordState> {
@@ -17,6 +16,19 @@ class WordBloc extends Bloc<WordEvent, WordState> {
   ) : super(WordInitialState()) {
     on<WordTextChangeEvent>(_onTextChange);
     on<WordSelectEvent>(_onWordSelect);
+    init();
+  }
+
+  void init() async {
+    final allWords =
+        await (database.select(database.wordItems)..limit(20)).get();
+
+    emit(WordLoadedState(allWords
+        .map((e) => WordModel(
+            wordId: e.id,
+            wordBasicWord: e.basic_word,
+            wordSplitWord: e.split_word))
+        .toList()));
   }
 
   Future<void> _onTextChange(
@@ -30,11 +42,7 @@ class WordBloc extends Bloc<WordEvent, WordState> {
 
     emit(WordLoadingState());
 
-    try {
-      final word = await _wordRepository.getWordId(event.query);
-
-      emit(WordLoadedState(word));
-    } catch (e, s) {
+    try {} catch (e, s) {
       debugPrint('Error: $e');
       debugPrintStack(stackTrace: s);
 
@@ -45,7 +53,10 @@ class WordBloc extends Bloc<WordEvent, WordState> {
 
 Future<void> _onWordSelect(
     WordSelectEvent event, Emitter<WordState> emit) async {
-  // debugPrint('Location Select Event');
+  // final dbFile = await getDatabaseFile();
+  // final allWords = await (db.select(db.wordItems)..limit(20)).get();
+  // print(allWords);
+  // // debugPrint('Location Select Event');
   // emit(LocationSearchLoadingState());
   //
   // // try {

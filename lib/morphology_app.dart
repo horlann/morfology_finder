@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:morphology_finder/router/router.dart';
+import 'core/router/router.dart';
 
 class MorphologyApp extends StatefulWidget {
   const MorphologyApp({super.key});

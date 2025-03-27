@@ -15,13 +15,13 @@ class WordLoadingState extends WordState {
 
 class WordLoadedState extends WordState {
   WordLoadedState(
-    this.word,
+    this.words,
   );
 
-  final WordModel word;
+  final List<WordModel> words;
 
   @override
-  List<Object?> get props => [word];
+  List<Object?> get props => [words];
 }
 
 class WordFailureState extends WordState {

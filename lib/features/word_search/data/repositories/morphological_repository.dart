@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/models/morphological.dart';
 
 import 'dart:convert';
-
-import 'package:morphology_finder/features/word_search/data/models/morphological.dart';
 
 class MorphologicalRepository {
   Future<MorphologicalModel> getMorphologicalAlternation({

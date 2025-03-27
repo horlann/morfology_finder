@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_web_worker_example/core/router/router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:morphology_finder/router/router.dart';
 
 @RoutePage()
 class IntroduceScreen extends StatelessWidget {
