@@ -1,5 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+
+import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
 class SpreadsheetScreen extends StatefulWidget {
@@ -28,34 +29,32 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    top: 20,
-                    right: 40,
-                    bottom: 20,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Container(
-                      width: screenWidth * 0.9,
-                      height: screenHeight * 0.8,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                      ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 40,
+              top: 20,
+              right: 40,
+              bottom: 20,
+            ),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: screenWidth * 0.9,
+                    height: screenHeight * 0.75,
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
