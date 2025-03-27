@@ -22,29 +22,29 @@ class AppRouter extends RootStackRouter {
       AutoRoute(
         page: HomeRoute.page,
         path: '/main',
-        children: [
-          AutoRoute(
-            page: MainRoute.page,
-            path: 'main',
-          ),
-          AutoRoute(
-            page: WordSearchRoute.page,
-            path: 'word_search',
-          ),
-          AutoRoute(
-            page: SpreadsheetRoute.page,
-            path: 'spreadsheet',
-          ),
-        ]
+        // children: [
+        //   AutoRoute(
+        //     page: MainRoute.page,
+        //     path: 'main',
+        //   ),
+        //   AutoRoute(
+        //     page: WordSearchRoute.page,
+        //     path: 'word_search',
+        //   ),
+        //   AutoRoute(
+        //     page: SpreadsheetRoute.page,
+        //     path: 'spreadsheet',
+        //   ),
+        // ]
       ),
       AutoRoute(
         page: WordDetailsRoute.page,
         path: '/word_details',
       ),
-      // AutoRoute(
-      //   page: SpreadsheetRoute.page,
-      //   path: '/spreadsheet',
-      // ),
+      AutoRoute(
+        page: SpreadsheetRoute.page,
+        path: '/spreadsheet',
+      ),
     ];
   }
 }
