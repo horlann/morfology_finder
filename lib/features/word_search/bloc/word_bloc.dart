@@ -11,9 +11,10 @@ part 'word_state.dart';
 
 class WordBloc extends Bloc<WordEvent, WordState> {
   final WordRepository _wordRepository;
-  final int _pageSize = 20; // Количество слов на одной странице
+  final int _pageSize = 20; // Количество слов на странице
   int _currentPage = 0; // Текущая страница
-  bool _isLoadingMore = false; // Флаг загрузки следующей страницы
+  bool _isLoadingMore = false; // Флаг загрузки
+  String _currentQuery = ""; // Текущий поисковый запрос
 
   WordBloc(this._wordRepository) : super(WordInitialState()) {
     on<WordInitEvent>(_onInit);
@@ -24,21 +25,15 @@ class WordBloc extends Bloc<WordEvent, WordState> {
     add(WordInitEvent());
   }
 
+  /// 📌 Метод инициализации (загрузка первой страницы)
   Future<void> _onInit(WordInitEvent event, Emitter<WordState> emit) async {
     try {
-      _currentPage = 0; // Сброс страницы при инициализации
+      _currentPage = 0;
+      _currentQuery = ""; // Очистить поисковой запрос
 
-      final allWords =
-          await (database.select(database.wordItems)..limit(_pageSize)).get();
+      final allWords = await _fetchWords(page: _currentPage, query: "");
 
-      final wordList = allWords
-          .map((e) => WordModel(
-              wordId: e.id,
-              wordBasicWord: e.basic_word,
-              wordSplitWord: e.split_word))
-          .toList();
-
-      emit(WordLoadedState(wordList));
+      emit(WordLoadedState(allWords));
     } catch (e, s) {
       debugPrint('Error loading words (init bloc): $e');
       debugPrintStack(stackTrace: s);
@@ -46,6 +41,34 @@ class WordBloc extends Bloc<WordEvent, WordState> {
     }
   }
 
+  /// 📌 Метод поиска по слову
+  Future<void> _onTextChange(
+      WordTextChangeEvent event, Emitter<WordState> emit) async {
+    debugPrint('Word Search Text Change Event: ${event.query}');
+
+    _currentQuery = event.query.trim();
+    _currentPage = 0; // Сбросить страницу при новом поиске
+
+    if (_currentQuery.isEmpty) {
+      add(WordInitEvent()); // Если строка пустая — загрузить стандартные данные
+      return;
+    }
+
+    emit(WordLoadingState());
+
+    try {
+      final searchResults =
+          await _fetchWords(page: _currentPage, query: _currentQuery);
+
+      emit(WordLoadedState(searchResults));
+    } catch (e, s) {
+      debugPrint('Error during search: $e');
+      debugPrintStack(stackTrace: s);
+      emit(WordFailureState(e.toString()));
+    }
+  }
+
+  /// 📌 Метод подгрузки следующей страницы
   Future<void> _onLoadMore(
       WordLoadMoreEvent event, Emitter<WordState> emit) async {
     if (_isLoadingMore || state is! WordLoadedState) return;
@@ -54,27 +77,19 @@ class WordBloc extends Bloc<WordEvent, WordState> {
     debugPrint('Loading more words...');
 
     try {
-      final currentState = state as WordLoadedState;
-      final lastWordId =
-          currentState.words.isNotEmpty ? currentState.words.last.wordId : 0;
+      _currentPage++;
 
-      final moreWords = await (database.select(database.wordItems)
-            ..where((tbl) => tbl.id.isBiggerThanValue(lastWordId))
-            ..orderBy(
-                [(tbl) => OrderingTerm(expression: tbl.id)]) // Сортировка по id
-            ..limit(_pageSize))
-          .get();
+      final moreWords =
+          await _fetchWords(page: _currentPage, query: _currentQuery);
 
       if (moreWords.isEmpty) {
         debugPrint('No more words to load.');
         return;
       }
 
+      final currentState = state as WordLoadedState;
       final updatedWordList = List<WordModel>.from(currentState.words)
-        ..addAll(moreWords.map((e) => WordModel(
-            wordId: e.id,
-            wordBasicWord: e.basic_word,
-            wordSplitWord: e.split_word)));
+        ..addAll(moreWords);
 
       emit(WordLoadedState(updatedWordList));
     } catch (e, s) {
@@ -85,26 +100,33 @@ class WordBloc extends Bloc<WordEvent, WordState> {
     }
   }
 
-  Future<void> _onTextChange(
-      WordTextChangeEvent event, Emitter<WordState> emit) async {
-    debugPrint('Word Search Text Change Event');
-
-    if (event.query.isEmpty) {
-      emit(WordInitialState());
-      return;
-    }
-
-    emit(WordLoadingState());
-
-    try {} catch (e, s) {
-      debugPrint('Error: $e');
-      debugPrintStack(stackTrace: s);
-      emit(WordFailureState(e.toString()));
-    }
-  }
-
+  /// 📌 Метод выбора слова
   Future<void> _onWordSelect(
-      WordSelectEvent event, Emitter<WordState> emit) async {
-    debugPrint('Word Select Event');
+      WordSelectEvent event, Emitter<WordState> emit) async {}
+
+  /// 📌 Метод получения слов (пагинация + поиск)
+  Future<List<WordModel>> _fetchWords(
+      {required int page, required String query}) async {
+    final queryBuilder = database.select(database.wordItems)
+      ..orderBy([(tbl) => OrderingTerm(expression: tbl.id)]) // Сортировка по ID
+      ..limit(_pageSize);
+
+    if (query.isNotEmpty) {
+      queryBuilder.where((tbl) =>
+          tbl.basic_word.like('%$query%') |
+          tbl.split_word.like('%$query%')); // Поиск по двум столбцам
+    } else if (page > 0) {
+      queryBuilder.where((tbl) =>
+          tbl.id.isBiggerThanValue(page * _pageSize)); // Пагинация без `offset`
+    }
+
+    final results = await queryBuilder.get();
+
+    return results
+        .map((e) => WordModel(
+            wordId: e.id,
+            wordBasicWord: e.basic_word,
+            wordSplitWord: e.split_word))
+        .toList();
   }
 }

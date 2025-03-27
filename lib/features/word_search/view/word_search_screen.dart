@@ -63,30 +63,34 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                 ),
                 child: Column(
                   children: [
-                    TextField(
-                      controller: _searchController,
-                      onChanged: (c) {},
-                      decoration: InputDecoration(
-                        labelText: 'Пошук слова',
-                        labelStyle: TextStyle(
-                          color: Colors.black.withAlpha(100),
-                          fontSize: 16,
+                    Builder(builder: (context) {
+                      return TextField(
+                        controller: _searchController,
+                        onChanged: (text) => context
+                            .read<WordBloc>()
+                            .add(WordTextChangeEvent(text)),
+                        decoration: InputDecoration(
+                          labelText: 'Пошук слова',
+                          labelStyle: TextStyle(
+                            color: Colors.black.withAlpha(100),
+                            fontSize: 16,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 1),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {},
+                          ),
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 1),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.search),
-                          onPressed: () {},
-                        ),
-                      ),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                      );
+                    }),
                     const SizedBox(height: 20),
                     Expanded(
                       child: BlocBuilder<WordBloc, WordState>(
