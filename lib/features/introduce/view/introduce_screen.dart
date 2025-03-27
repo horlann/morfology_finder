@@ -77,16 +77,31 @@ class IntroduceScreen extends StatelessWidget {
                   context.router.push(HomeRoute());
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                   padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.04,
                     vertical: screenHeight * 0.02,
                   ),
-                  textStyle: TextStyle(
-                    fontSize: screenWidth > 600 ? 36 : 24,
-                    fontWeight: FontWeight.bold,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                child: const Text('Натисни, щоб почати'),
+                child: SizedBox(
+                  width: screenWidth * 0.2,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Натисни, \nщоб почати',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                        fontSize: screenWidth > 600 ? 20 : 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

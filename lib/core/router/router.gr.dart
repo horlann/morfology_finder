@@ -43,6 +43,38 @@ class IntroduceRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+    : super(MainRoute.name, initialChildren: children);
+
+  static const String name = 'MainRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MainScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SpreadsheetScreen]
+class SpreadsheetRoute extends PageRouteInfo<void> {
+  const SpreadsheetRoute({List<PageRouteInfo>? children})
+    : super(SpreadsheetRoute.name, initialChildren: children);
+
+  static const String name = 'SpreadsheetRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SpreadsheetScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [WordDetailsScreen]
 class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
   WordDetailsRoute({
