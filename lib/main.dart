@@ -84,7 +84,7 @@ void main() {
 Future<void> loadJsonAndInsert(Database db) async {
   final jsonString = await rootBundle.loadString('assets/data/word.json');
   final List<dynamic> jsonList = json.decode(jsonString);
-  final list2 = jsonList.sublist(0, 10);
+  final list2 = jsonList;
   for (var item in list2) {
     final entry = Word(
         id: item['id'],

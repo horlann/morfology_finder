@@ -27,3 +27,5 @@ class SelectEvent extends WordEvent {
 
 // final MophologicalModel morphologicalModel;
 }
+
+class WordLoadMoreEvent extends WordEvent {} // Новый Event для подгрузки

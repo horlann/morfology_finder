@@ -92,9 +92,9 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                       child: BlocBuilder<WordBloc, WordState>(
                         builder: (context, state) {
                           if (state is WordLoadedState) {
-                            return _buildSearchResults((state).words);
+                            return _List(words: (state).words);
                           } else {
-                            return _buildSearchResults([]);
+                            return _List(words: []);
                           }
                         },
                       ),
@@ -108,9 +108,35 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
       ),
     );
   }
+}
 
-  Widget _buildSearchResults(List<WordModel> words) {
-    if (words.isEmpty) {
+class _List extends StatefulWidget {
+  const _List({
+    required this.words,
+  });
+
+  final List<WordModel> words;
+
+  @override
+  State<_List> createState() => _ListState();
+}
+
+class _ListState extends State<_List> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        context.read<WordBloc>().add(WordLoadMoreEvent());
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.words.isEmpty) {
       return Center(
         child: Text(
           'Немає результатів для вашого запиту.',
@@ -120,15 +146,16 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     }
 
     return ListView.builder(
-      itemCount: words.length,
+      controller: _scrollController,
+      itemCount: widget.words.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            words[index].wordBasicWord ?? "",
+            widget.words[index].wordBasicWord ?? "",
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () {
-            final word = words[index];
+            final word = widget.words[index];
             context.read<WordBloc>().add(WordSelectEvent(word));
             context.router
                 .push(WordDetailsRoute(word: word.wordBasicWord ?? ''));
