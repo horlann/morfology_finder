@@ -8,6 +8,9 @@ import 'package:flutter_web_worker_example/features/spreadsheet/view/spreadsheet
 import 'package:flutter_web_worker_example/features/word_details/view/word_details_screen.dart';
 import 'package:flutter_web_worker_example/features/word_search/view/word_search_screen.dart';
 
+
+
+
 part 'router.gr.dart';
 
 @AutoRouterConfig()
