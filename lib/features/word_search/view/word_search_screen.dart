@@ -161,8 +161,7 @@ class _ListState extends State<_List> {
           onTap: () {
             final word = widget.words[index];
             context.read<WordBloc>().add(WordSelectEvent(word));
-            context.router
-                .push(WordDetailsRoute(word: word.wordBasicWord ?? ''));
+            context.router.push(WordDetailsRoute(word: word));
           },
         );
       },

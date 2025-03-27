@@ -264,15 +264,324 @@ class WordItemsCompanion extends UpdateCompanion<Word> {
   }
 }
 
+class $AlternationItemsTable extends AlternationItems
+    with TableInfo<$AlternationItemsTable, Alternation> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AlternationItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idPrMeta = const VerificationMeta('idPr');
+  @override
+  late final GeneratedColumn<int> idPr = GeneratedColumn<int>(
+      'id_pr', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _wordIdMeta = const VerificationMeta('wordId');
+  @override
+  late final GeneratedColumn<int> wordId = GeneratedColumn<int>(
+      'word_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _morphology_processMeta =
+      const VerificationMeta('morphology_process');
+  @override
+  late final GeneratedColumn<String> morphology_process =
+      GeneratedColumn<String>('morphology_process', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _explanationMeta =
+      const VerificationMeta('explanation');
+  @override
+  late final GeneratedColumn<String> explanation = GeneratedColumn<String>(
+      'explanation', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [idPr, id, wordId, morphology_process, explanation];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'alternation_items';
+  @override
+  VerificationContext validateIntegrity(Insertable<Alternation> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id_pr')) {
+      context.handle(
+          _idPrMeta, idPr.isAcceptableOrUnknown(data['id_pr']!, _idPrMeta));
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('word_id')) {
+      context.handle(_wordIdMeta,
+          wordId.isAcceptableOrUnknown(data['word_id']!, _wordIdMeta));
+    } else if (isInserting) {
+      context.missing(_wordIdMeta);
+    }
+    if (data.containsKey('morphology_process')) {
+      context.handle(
+          _morphology_processMeta,
+          morphology_process.isAcceptableOrUnknown(
+              data['morphology_process']!, _morphology_processMeta));
+    } else if (isInserting) {
+      context.missing(_morphology_processMeta);
+    }
+    if (data.containsKey('explanation')) {
+      context.handle(
+          _explanationMeta,
+          explanation.isAcceptableOrUnknown(
+              data['explanation']!, _explanationMeta));
+    } else if (isInserting) {
+      context.missing(_explanationMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {idPr};
+  @override
+  Alternation map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Alternation(
+      idPr: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id_pr'])!,
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      wordId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}word_id'])!,
+      morphology_process: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}morphology_process'])!,
+      explanation: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}explanation'])!,
+    );
+  }
+
+  @override
+  $AlternationItemsTable createAlias(String alias) {
+    return $AlternationItemsTable(attachedDatabase, alias);
+  }
+}
+
+class Alternation extends DataClass implements Insertable<Alternation> {
+  final int idPr;
+  final int id;
+  final int wordId;
+  final String morphology_process;
+  final String explanation;
+  const Alternation(
+      {required this.idPr,
+      required this.id,
+      required this.wordId,
+      required this.morphology_process,
+      required this.explanation});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id_pr'] = Variable<int>(idPr);
+    map['id'] = Variable<int>(id);
+    map['word_id'] = Variable<int>(wordId);
+    map['morphology_process'] = Variable<String>(morphology_process);
+    map['explanation'] = Variable<String>(explanation);
+    return map;
+  }
+
+  AlternationItemsCompanion toCompanion(bool nullToAbsent) {
+    return AlternationItemsCompanion(
+      idPr: Value(idPr),
+      id: Value(id),
+      wordId: Value(wordId),
+      morphology_process: Value(morphology_process),
+      explanation: Value(explanation),
+    );
+  }
+
+  factory Alternation.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Alternation(
+      idPr: serializer.fromJson<int>(json['idPr']),
+      id: serializer.fromJson<int>(json['id']),
+      wordId: serializer.fromJson<int>(json['wordId']),
+      morphology_process:
+          serializer.fromJson<String>(json['morphology_process']),
+      explanation: serializer.fromJson<String>(json['explanation']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'idPr': serializer.toJson<int>(idPr),
+      'id': serializer.toJson<int>(id),
+      'wordId': serializer.toJson<int>(wordId),
+      'morphology_process': serializer.toJson<String>(morphology_process),
+      'explanation': serializer.toJson<String>(explanation),
+    };
+  }
+
+  Alternation copyWith(
+          {int? idPr,
+          int? id,
+          int? wordId,
+          String? morphology_process,
+          String? explanation}) =>
+      Alternation(
+        idPr: idPr ?? this.idPr,
+        id: id ?? this.id,
+        wordId: wordId ?? this.wordId,
+        morphology_process: morphology_process ?? this.morphology_process,
+        explanation: explanation ?? this.explanation,
+      );
+  Alternation copyWithCompanion(AlternationItemsCompanion data) {
+    return Alternation(
+      idPr: data.idPr.present ? data.idPr.value : this.idPr,
+      id: data.id.present ? data.id.value : this.id,
+      wordId: data.wordId.present ? data.wordId.value : this.wordId,
+      morphology_process: data.morphology_process.present
+          ? data.morphology_process.value
+          : this.morphology_process,
+      explanation:
+          data.explanation.present ? data.explanation.value : this.explanation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Alternation(')
+          ..write('idPr: $idPr, ')
+          ..write('id: $id, ')
+          ..write('wordId: $wordId, ')
+          ..write('morphology_process: $morphology_process, ')
+          ..write('explanation: $explanation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(idPr, id, wordId, morphology_process, explanation);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Alternation &&
+          other.idPr == this.idPr &&
+          other.id == this.id &&
+          other.wordId == this.wordId &&
+          other.morphology_process == this.morphology_process &&
+          other.explanation == this.explanation);
+}
+
+class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
+  final Value<int> idPr;
+  final Value<int> id;
+  final Value<int> wordId;
+  final Value<String> morphology_process;
+  final Value<String> explanation;
+  const AlternationItemsCompanion({
+    this.idPr = const Value.absent(),
+    this.id = const Value.absent(),
+    this.wordId = const Value.absent(),
+    this.morphology_process = const Value.absent(),
+    this.explanation = const Value.absent(),
+  });
+  AlternationItemsCompanion.insert({
+    this.idPr = const Value.absent(),
+    required int id,
+    required int wordId,
+    required String morphology_process,
+    required String explanation,
+  })  : id = Value(id),
+        wordId = Value(wordId),
+        morphology_process = Value(morphology_process),
+        explanation = Value(explanation);
+  static Insertable<Alternation> custom({
+    Expression<int>? idPr,
+    Expression<int>? id,
+    Expression<int>? wordId,
+    Expression<String>? morphology_process,
+    Expression<String>? explanation,
+  }) {
+    return RawValuesInsertable({
+      if (idPr != null) 'id_pr': idPr,
+      if (id != null) 'id': id,
+      if (wordId != null) 'word_id': wordId,
+      if (morphology_process != null) 'morphology_process': morphology_process,
+      if (explanation != null) 'explanation': explanation,
+    });
+  }
+
+  AlternationItemsCompanion copyWith(
+      {Value<int>? idPr,
+      Value<int>? id,
+      Value<int>? wordId,
+      Value<String>? morphology_process,
+      Value<String>? explanation}) {
+    return AlternationItemsCompanion(
+      idPr: idPr ?? this.idPr,
+      id: id ?? this.id,
+      wordId: wordId ?? this.wordId,
+      morphology_process: morphology_process ?? this.morphology_process,
+      explanation: explanation ?? this.explanation,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (idPr.present) {
+      map['id_pr'] = Variable<int>(idPr.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (wordId.present) {
+      map['word_id'] = Variable<int>(wordId.value);
+    }
+    if (morphology_process.present) {
+      map['morphology_process'] = Variable<String>(morphology_process.value);
+    }
+    if (explanation.present) {
+      map['explanation'] = Variable<String>(explanation.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AlternationItemsCompanion(')
+          ..write('idPr: $idPr, ')
+          ..write('id: $id, ')
+          ..write('wordId: $wordId, ')
+          ..write('morphology_process: $morphology_process, ')
+          ..write('explanation: $explanation')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   $DatabaseManager get managers => $DatabaseManager(this);
   late final $WordItemsTable wordItems = $WordItemsTable(this);
+  late final $AlternationItemsTable alternationItems =
+      $AlternationItemsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [wordItems];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [wordItems, alternationItems];
 }
 
 typedef $$WordItemsTableCreateCompanionBuilder = WordItemsCompanion Function({
@@ -419,10 +728,182 @@ typedef $$WordItemsTableProcessedTableManager = ProcessedTableManager<
     (Word, BaseReferences<_$Database, $WordItemsTable, Word>),
     Word,
     PrefetchHooks Function()>;
+typedef $$AlternationItemsTableCreateCompanionBuilder
+    = AlternationItemsCompanion Function({
+  Value<int> idPr,
+  required int id,
+  required int wordId,
+  required String morphology_process,
+  required String explanation,
+});
+typedef $$AlternationItemsTableUpdateCompanionBuilder
+    = AlternationItemsCompanion Function({
+  Value<int> idPr,
+  Value<int> id,
+  Value<int> wordId,
+  Value<String> morphology_process,
+  Value<String> explanation,
+});
+
+class $$AlternationItemsTableFilterComposer
+    extends Composer<_$Database, $AlternationItemsTable> {
+  $$AlternationItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get idPr => $composableBuilder(
+      column: $table.idPr, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get wordId => $composableBuilder(
+      column: $table.wordId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get morphology_process => $composableBuilder(
+      column: $table.morphology_process,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get explanation => $composableBuilder(
+      column: $table.explanation, builder: (column) => ColumnFilters(column));
+}
+
+class $$AlternationItemsTableOrderingComposer
+    extends Composer<_$Database, $AlternationItemsTable> {
+  $$AlternationItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get idPr => $composableBuilder(
+      column: $table.idPr, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get wordId => $composableBuilder(
+      column: $table.wordId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get morphology_process => $composableBuilder(
+      column: $table.morphology_process,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get explanation => $composableBuilder(
+      column: $table.explanation, builder: (column) => ColumnOrderings(column));
+}
+
+class $$AlternationItemsTableAnnotationComposer
+    extends Composer<_$Database, $AlternationItemsTable> {
+  $$AlternationItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get idPr =>
+      $composableBuilder(column: $table.idPr, builder: (column) => column);
+
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get wordId =>
+      $composableBuilder(column: $table.wordId, builder: (column) => column);
+
+  GeneratedColumn<String> get morphology_process => $composableBuilder(
+      column: $table.morphology_process, builder: (column) => column);
+
+  GeneratedColumn<String> get explanation => $composableBuilder(
+      column: $table.explanation, builder: (column) => column);
+}
+
+class $$AlternationItemsTableTableManager extends RootTableManager<
+    _$Database,
+    $AlternationItemsTable,
+    Alternation,
+    $$AlternationItemsTableFilterComposer,
+    $$AlternationItemsTableOrderingComposer,
+    $$AlternationItemsTableAnnotationComposer,
+    $$AlternationItemsTableCreateCompanionBuilder,
+    $$AlternationItemsTableUpdateCompanionBuilder,
+    (
+      Alternation,
+      BaseReferences<_$Database, $AlternationItemsTable, Alternation>
+    ),
+    Alternation,
+    PrefetchHooks Function()> {
+  $$AlternationItemsTableTableManager(
+      _$Database db, $AlternationItemsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AlternationItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AlternationItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AlternationItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> idPr = const Value.absent(),
+            Value<int> id = const Value.absent(),
+            Value<int> wordId = const Value.absent(),
+            Value<String> morphology_process = const Value.absent(),
+            Value<String> explanation = const Value.absent(),
+          }) =>
+              AlternationItemsCompanion(
+            idPr: idPr,
+            id: id,
+            wordId: wordId,
+            morphology_process: morphology_process,
+            explanation: explanation,
+          ),
+          createCompanionCallback: ({
+            Value<int> idPr = const Value.absent(),
+            required int id,
+            required int wordId,
+            required String morphology_process,
+            required String explanation,
+          }) =>
+              AlternationItemsCompanion.insert(
+            idPr: idPr,
+            id: id,
+            wordId: wordId,
+            morphology_process: morphology_process,
+            explanation: explanation,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$AlternationItemsTableProcessedTableManager = ProcessedTableManager<
+    _$Database,
+    $AlternationItemsTable,
+    Alternation,
+    $$AlternationItemsTableFilterComposer,
+    $$AlternationItemsTableOrderingComposer,
+    $$AlternationItemsTableAnnotationComposer,
+    $$AlternationItemsTableCreateCompanionBuilder,
+    $$AlternationItemsTableUpdateCompanionBuilder,
+    (
+      Alternation,
+      BaseReferences<_$Database, $AlternationItemsTable, Alternation>
+    ),
+    Alternation,
+    PrefetchHooks Function()>;
 
 class $DatabaseManager {
   final _$Database _db;
   $DatabaseManager(this._db);
   $$WordItemsTableTableManager get wordItems =>
       $$WordItemsTableTableManager(_db, _db.wordItems);
+  $$AlternationItemsTableTableManager get alternationItems =>
+      $$AlternationItemsTableTableManager(_db, _db.alternationItems);
 }

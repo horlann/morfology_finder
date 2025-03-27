@@ -132,7 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     MainScreen(),
                     WordSearchScreen(),
-                    SpreadsheetScreen(),
+                    SpreadsheetScreen(
+                      showBackButton: false,
+                    ),
                   ],
                 ),
               ),

@@ -60,18 +60,44 @@ class MainRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SpreadsheetScreen]
-class SpreadsheetRoute extends PageRouteInfo<void> {
-  const SpreadsheetRoute({List<PageRouteInfo>? children})
-    : super(SpreadsheetRoute.name, initialChildren: children);
+class SpreadsheetRoute extends PageRouteInfo<SpreadsheetRouteArgs> {
+  SpreadsheetRoute({
+    Key? key,
+    bool showBackButton = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SpreadsheetRoute.name,
+         args: SpreadsheetRouteArgs(key: key, showBackButton: showBackButton),
+         initialChildren: children,
+       );
 
   static const String name = 'SpreadsheetRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SpreadsheetScreen();
+      final args = data.argsAs<SpreadsheetRouteArgs>(
+        orElse: () => const SpreadsheetRouteArgs(),
+      );
+      return SpreadsheetScreen(
+        key: args.key,
+        showBackButton: args.showBackButton,
+      );
     },
   );
+}
+
+class SpreadsheetRouteArgs {
+  const SpreadsheetRouteArgs({this.key, this.showBackButton = false});
+
+  final Key? key;
+
+  final bool showBackButton;
+
+  @override
+  String toString() {
+    return 'SpreadsheetRouteArgs{key: $key, showBackButton: $showBackButton}';
+  }
 }
 
 /// generated route for
@@ -79,7 +105,7 @@ class SpreadsheetRoute extends PageRouteInfo<void> {
 class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
   WordDetailsRoute({
     Key? key,
-    required String word,
+    required WordModel word,
     List<PageRouteInfo>? children,
   }) : super(
          WordDetailsRoute.name,
@@ -103,7 +129,7 @@ class WordDetailsRouteArgs {
 
   final Key? key;
 
-  final String word;
+  final WordModel word;
 
   @override
   String toString() {

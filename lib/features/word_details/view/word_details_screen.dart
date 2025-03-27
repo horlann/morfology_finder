@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_web_worker_example/core/db/db.dart';
 import 'package:flutter_web_worker_example/core/router/router.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
@@ -11,7 +13,7 @@ class WordDetailsScreen extends StatefulWidget {
     required this.word,
   });
 
-  final String word;
+  final WordModel word;
 
   @override
   State<WordDetailsScreen> createState() => _WordDetailsScreenState();
@@ -84,16 +86,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 children: [
                   SizedBox(height: 120),
                   Text(
-                    'Ви обрали слово',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Text(
-                    widget.word,
+                    widget.word.wordSplitWord ?? "",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 36,
@@ -110,7 +103,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
             right: screenWidth * 0.33,
             child: OutlinedButton(
               onPressed: () {
-                context.router.push(SpreadsheetRoute());
+                context.router.push(SpreadsheetRoute(showBackButton: true));
               },
               style: OutlinedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
