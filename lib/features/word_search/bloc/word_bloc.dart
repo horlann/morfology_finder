@@ -6,6 +6,7 @@ import 'package:flutter_web_worker_example/features/word_search/data/repositorie
 import 'package:flutter_web_worker_example/main.dart';
 
 part 'word_event.dart';
+
 part 'word_state.dart';
 
 class WordBloc extends Bloc<WordEvent, WordState> {
@@ -14,21 +15,39 @@ class WordBloc extends Bloc<WordEvent, WordState> {
   WordBloc(
     this._wordRepository,
   ) : super(WordInitialState()) {
+    on<WordInitEvent>(_onInit);
     on<WordTextChangeEvent>(_onTextChange);
     on<WordSelectEvent>(_onWordSelect);
-    init();
+
+    add(WordInitEvent());
+
   }
 
-  void init() async {
-    final allWords =
-        await (database.select(database.wordItems)..limit(20)).get();
+  Future<void> _onInit(WordInitEvent event, Emitter<WordState> emit) async {
+    try {
+      final allWords =
+      await (database.select(database.wordItems)
+        ..limit(20)).get();
 
-    emit(WordLoadedState(allWords
-        .map((e) => WordModel(
-            wordId: e.id,
-            wordBasicWord: e.basic_word,
-            wordSplitWord: e.split_word))
-        .toList()));
+      final wordList = allWords
+          .map((e) =>
+          WordModel(
+              wordId: e.id,
+              wordBasicWord: e.basic_word,
+              wordSplitWord: e.split_word))
+          .toList();
+
+      if (state is! WordLoadedState ||
+          (state as WordLoadedState).words != wordList) {
+        emit(WordLoadedState(wordList));
+      }
+    } catch (e, s) {
+      debugPrint('Error loading words (init bloc): $e');
+      debugPrintStack(stackTrace: s);
+
+      emit(WordFailureState(e.toString()));
+    }
+
   }
 
   Future<void> _onTextChange(

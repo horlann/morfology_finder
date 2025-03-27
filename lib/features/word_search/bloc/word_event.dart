@@ -3,6 +3,8 @@ part of 'word_bloc.dart';
 @immutable
 sealed class WordEvent {}
 
+class WordInitEvent extends WordEvent {}
+
 class WordTextChangeEvent extends WordEvent {
   WordTextChangeEvent(
     this.query,
