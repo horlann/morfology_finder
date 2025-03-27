@@ -37,8 +37,8 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
             ),
           ),
           Positioned(
-            left: 200,
-            top: 20,
+            left: screenWidth * 0.12,
+            top: screenHeight * 0.025,
             child: GestureDetector(
               onTap: () {
                 context.router.maybePop();

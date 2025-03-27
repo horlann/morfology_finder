@@ -17,9 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    debugPrint(screenWidth.toString());
     final screenHeight = MediaQuery.sizeOf(context).height;
-    debugPrint(screenHeight.toString());
     final tabWidth = screenWidth * 0.12;
 
     return AutoTabsRouter(
@@ -70,46 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               tabsRouter: tabsRouter,
                               width: tabWidth,
                             ),
-
-                            // SizedBox(
-                            //   width: tabWidth,
-                            //   child: Tab(
-                            //     child: Text(
-                            //       'Головна',
-                            //       style: GoogleFonts.roboto(
-                            //         fontSize: 18,
-                            //         fontWeight: FontWeight.bold,
-                            //         color: Colors.white,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   width: tabWidth,
-                            //   child: Tab(
-                            //     child: Text(
-                            //       'Пошук',
-                            //       style: GoogleFonts.roboto(
-                            //         fontSize: 18,
-                            //         fontWeight: FontWeight.bold,
-                            //         color: Colors.white,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   width: tabWidth,
-                            //   child: Tab(
-                            //     child: Text(
-                            //       'Таблиця',
-                            //       style: GoogleFonts.roboto(
-                            //         fontSize: 18,
-                            //         fontWeight: FontWeight.bold,
-                            //         color: Colors.white,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -167,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: () => tabsRouter.setActiveIndex(index),
       child: Container(
+        height: 72,
         width: width,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -180,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Text(
           label,
           style: GoogleFonts.roboto(
-            fontSize: 18,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             color: isActive ? Colors.blue : Colors.grey[50],
           ),
