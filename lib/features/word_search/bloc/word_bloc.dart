@@ -3,20 +3,20 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
-import 'package:flutter_web_worker_example/features/word_search/data/repositories/word_repository.dart';
+
 import 'package:flutter_web_worker_example/main.dart';
 
 part 'word_event.dart';
 part 'word_state.dart';
 
 class WordBloc extends Bloc<WordEvent, WordState> {
-  final WordRepository _wordRepository;
+  // final WordRepository _wordRepository;
   final int _pageSize = 20; // Количество слов на странице
   int _currentPage = 0; // Текущая страница
   bool _isLoadingMore = false; // Флаг загрузки
   String _currentQuery = ""; // Текущий поисковый запрос
 
-  WordBloc(this._wordRepository) : super(WordInitialState()) {
+  WordBloc() : super(WordInitialState()) {
     on<WordInitEvent>(_onInit);
     on<WordTextChangeEvent>(_onTextChange);
     on<WordSelectEvent>(_onWordSelect);

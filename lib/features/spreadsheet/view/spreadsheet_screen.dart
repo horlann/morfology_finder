@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_worker_example/core/db/db.dart';
+
 import 'package:flutter_web_worker_example/features/spreadsheet/bloc/sp_bl.dart';
-import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
+
 
 @RoutePage()
 class SpreadsheetScreen extends StatefulWidget {
@@ -185,8 +185,8 @@ class _WordDataTableSource extends DataTableSource {
       DataCell(Text(word.wordModel.wordId.toString())),
       DataCell(Text(word.wordModel.wordBasicWord ?? "-")),
       DataCell(Text(word.wordModel.wordSplitWord ?? '-')),
-      DataCell(Text(word.info.morphology_process ?? '-')),
-      DataCell(Text(word.info.explanation ?? '-')),
+      DataCell(Text(word.info?.morphology_process ?? '-')),
+      DataCell(Text(word.info?.explanation ?? '-')),
       // DataCell(Text(word.$2.type ?? '-')),
     ]);
   }

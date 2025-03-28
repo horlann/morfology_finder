@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_worker_example/core/router/router.dart';
 import 'package:flutter_web_worker_example/features/word_search/bloc/word_bloc.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
-import 'package:flutter_web_worker_example/features/word_search/data/repositories/word_repository.dart';
+
 
 @RoutePage()
 class WordSearchScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
     return BlocProvider(
-      create: (context) => WordBloc(WordRepository()),
+      create: (context) => WordBloc(),
       child: Scaffold(
         body: Stack(
           children: [

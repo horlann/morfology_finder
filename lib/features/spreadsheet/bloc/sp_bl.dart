@@ -73,7 +73,7 @@ class SpreadshitBloc extends Bloc<SpreadshitEvent, SpreadshitState> {
 
 class AggregatedWordModel {
   final WordModel wordModel;
-  final Alternation info;
+  final Alternation? info;
 
   AggregatedWordModel({required this.wordModel, required this.info});
 }

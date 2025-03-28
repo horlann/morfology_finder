@@ -119,7 +119,7 @@ class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<WordDetailsRouteArgs>();
-      return WordDetailsScreen(key: args.key, word: args.word);
+      return WordDetailsScreen(key: args.key, wordModel: args.word);
     },
   );
 }

@@ -2,28 +2,28 @@ import 'package:json_annotation/json_annotation.dart';
 
 class MorphologicalModel {
   MorphologicalModel({
-    required this.morphologicalId,
-    required this.morphologicalWordId,
-    required this.morphologicalMorphologyProcess,
-    required this.morphologicalMeaning,
-    required this.morphologicalExplanation,
-    required this.morphologicalType,
+    required this.morphologicalModelId,
+    required this.morphologicalModelWordId,
+    required this.morphologicaModellMorphologyProcess,
+    required this.morphologicalModelMeaning,
+    required this.morphologicalModelExplanation,
+    required this.morphologicalModelType,
   });
 
-  final int morphologicalId;
+  final int morphologicalModelId;
 
-  final int morphologicalWordId;
+  final int morphologicalModelWordId;
 
-  final String? morphologicalMorphologyProcess;
+  final String? morphologicalModelMorphologyProcess;
 
-  final String? morphologicalMeaning;
+  final String? morphologicalModelMeaning;
 
-  final String? morphologicalExplanation;
+  final String? morphologicalModelExplanation;
 
-  final String? morphologicalType;
+  final String? morphologicalModelType;
 
   @override
   String toString() {
-    return 'MorphologicalModel{morphologicalId: $morphologicalId, morphologicalWordId: $morphologicalWordId, morphologicalMorphologyProcess: $morphologicalMorphologyProcess, morphologicalMeaning: $morphologicalMeaning, morphologicalExplanation: $morphologicalExplanation, morphologicalType: $morphologicalType}';
+    return 'MorphologicalModel{morphologicalId: $morphologicalModelId, morphologicalWordId: $morphologicalModelWordId, morphologicalMorphologyProcess: $morphologicaModellMorphologyProcess, morphologicalMeaning: $morphologicalModelMeaning, morphologicalExplanation: $morphologicalModelExplanation, morphologicalType: $morphologicalModelType}';
   }
 }
