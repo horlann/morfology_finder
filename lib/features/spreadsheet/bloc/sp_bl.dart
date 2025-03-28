@@ -49,9 +49,14 @@ class SpreadshitBloc extends Bloc<SpreadshitEvent, SpreadshitState> {
             ..where((tbl) => tbl.id.isIn(ids)))
           .get();
       final aggregatedList = alt.map((altItem) {
-        final matchingWord = words.firstWhere(
-          (word) => word.id == altItem.wordId,
-        );
+        final matchingWord =
+            words.firstWhere((word) => word.id == altItem.wordId,
+                orElse: () => Word(
+                      idPr: 0,
+                      id: 0,
+                      basic_word: '',
+                      split_word: '',
+                    ));
 
         return AggregatedWordModel(
           wordModel: WordModel(
