@@ -43,11 +43,69 @@ class IntroduceRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+    : super(MainRoute.name, initialChildren: children);
+
+  static const String name = 'MainRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MainScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SpreadsheetScreen]
+class SpreadsheetRoute extends PageRouteInfo<SpreadsheetRouteArgs> {
+  SpreadsheetRoute({
+    Key? key,
+    bool showBackButton = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SpreadsheetRoute.name,
+         args: SpreadsheetRouteArgs(key: key, showBackButton: showBackButton),
+         initialChildren: children,
+       );
+
+  static const String name = 'SpreadsheetRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SpreadsheetRouteArgs>(
+        orElse: () => const SpreadsheetRouteArgs(),
+      );
+      return SpreadsheetScreen(
+        key: args.key,
+        showBackButton: args.showBackButton,
+      );
+    },
+  );
+}
+
+class SpreadsheetRouteArgs {
+  const SpreadsheetRouteArgs({this.key, this.showBackButton = false});
+
+  final Key? key;
+
+  final bool showBackButton;
+
+  @override
+  String toString() {
+    return 'SpreadsheetRouteArgs{key: $key, showBackButton: $showBackButton}';
+  }
+}
+
+/// generated route for
 /// [WordDetailsScreen]
 class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
   WordDetailsRoute({
     Key? key,
-    required String word,
+    required WordModel word,
     List<PageRouteInfo>? children,
   }) : super(
          WordDetailsRoute.name,
@@ -71,7 +129,7 @@ class WordDetailsRouteArgs {
 
   final Key? key;
 
-  final String word;
+  final WordModel word;
 
   @override
   String toString() {

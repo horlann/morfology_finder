@@ -16,7 +16,19 @@ class WordItems extends Table {
   TextColumn get split_word => text()();
 }
 
-@DriftDatabase(tables: [WordItems])
+@DataClassName('Alternation')
+class AlternationItems extends Table {
+  IntColumn get idPr => integer().autoIncrement()(); // Primary key
+
+  IntColumn get id => integer()();
+
+  IntColumn get wordId => integer()();
+
+  TextColumn get morphology_process => text()();
+  TextColumn get explanation => text()();
+}
+
+@DriftDatabase(tables: [WordItems, AlternationItems])
 class Database extends _$Database {
   Database(super.executor);
 
@@ -24,29 +36,6 @@ class Database extends _$Database {
   int get schemaVersion => 1;
 }
 
-// LazyDatabase _openConnection(File dbFile) {
-//   return LazyDatabase(() async {
-//     return NativeDatabase(dbFile);
-//   });
-// }
-
-// Future<File> getDatabaseFile() async {
-//   final dbName = 'morphology.db';
-//
-//   final documents = await getApplicationDocumentsDirectory();
-//   final dbPath = p.join(documents.path, dbName);
-//
-//   final dbFile = File(dbPath);
-//
-//   if (!await dbFile.exists()) {
-//     // Copy from assets
-//     final data = await rootBundle.load('db/$dbName');
-//     final bytes = data.buffer.asUint8List();
-//     await dbFile.writeAsBytes(bytes, flush: true);
-//   }
-//
-//   return dbFile;
-// }
 Future<void> loadJsonAndInsert(Database db) async {
   final jsonString = await rootBundle.loadString('assets/data/word.json');
   final List<dynamic> jsonList = json.decode(jsonString);
@@ -63,4 +52,25 @@ Future<void> loadJsonAndInsert(Database db) async {
   }
 
   print('✅ Data inserted into Drift DB');
+}
+
+Future<void> loadJsonAndInsert2(Database db) async {
+  final jsonString =
+      await rootBundle.loadString('assets/data/alternation.json');
+  final List<dynamic> jsonList = json.decode(jsonString);
+
+  for (var item in jsonList) {
+    final row = Alternation(
+      id: item['id'],
+      idPr: item['id'],
+      wordId: item['word_id'],
+      explanation: item['explanation'],
+      morphology_process: item['morphology_process'],
+      // Add other fields here...
+    );
+
+    await db.into(db.alternationItems).insertOnConflictUpdate(row);
+  }
+
+  print('✅ Data inserted into Drift DB2');
 }
