@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_worker_example/core/router/router.dart';
 
 import 'package:flutter_web_worker_example/features/spreadsheet/bloc/sp_bl.dart';
-
 
 @RoutePage()
 class SpreadsheetScreen extends StatefulWidget {
@@ -46,17 +46,24 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
                     right: 40,
                     bottom: 20,
                   ),
-                  child: IntrinsicHeight(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.12,
+                      vertical: screenHeight * 0.04,
+                    ),
                     child: Container(
                       width: screenWidth * 0.9,
-                      height: screenHeight * 0.8,
+                      height: screenHeight * 0.75,
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 24,
+                        ),
                         child: WordTableScreen(),
                       ),
                     ),
@@ -71,7 +78,7 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
               left: 24,
               child: GestureDetector(
                 onTap: () {
-                  context.router.maybePop();
+                  context.router.push(HomeRoute());
                 },
                 child: Container(
                   width: 40,
@@ -129,7 +136,7 @@ class _WordTableScreenState extends State<WordTableScreen> {
     return BlocProvider(
       create: (BuildContext context) => SpreadshitBloc(),
       child: Scaffold(
-        appBar: AppBar(title: Text('Список слов')),
+        appBar: AppBar(title: Text('Список слів')),
         body: BlocBuilder<SpreadshitBloc, SpreadshitState>(
           builder: (context, state) {
             if (state is SpreadshitLoadingState) {
@@ -142,7 +149,7 @@ class _WordTableScreenState extends State<WordTableScreen> {
               return SingleChildScrollView(
                 controller: _scrollController,
                 child: PaginatedDataTable(
-                  header: Text('Таблица слов'),
+                  header: Text('Таблиця слів'),
                   columns: [
                     DataColumn(label: Text('ID')),
                     DataColumn(label: Text('Word ID')),

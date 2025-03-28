@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'Головна',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'Пошук',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'Таблиця',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),

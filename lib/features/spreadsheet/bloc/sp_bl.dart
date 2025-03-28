@@ -80,5 +80,8 @@ class AggregatedWordModel {
   final WordModel wordModel;
   final Alternation? info;
 
-  AggregatedWordModel({required this.wordModel, required this.info});
+  AggregatedWordModel({
+    required this.wordModel,
+    required this.info,
+  });
 }
