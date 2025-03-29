@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_worker_example/core/router/router.dart';
-
+import 'package:flutter_web_worker_example/features/home/view/home_screen.dart';
 import 'package:flutter_web_worker_example/features/spreadsheet/bloc/sp_bl.dart';
 
 @RoutePage()
@@ -40,32 +39,24 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    top: 20,
-                    right: 40,
+                  padding: EdgeInsets.only(
+                    top: 20 + (widget.showBackButton ? 70 : 0),
                     bottom: 20,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.12,
-                      vertical: screenHeight * 0.04,
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: screenHeight * 0.75,
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Container(
-                      width: screenWidth * 0.9,
-                      height: screenHeight * 0.75,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 24,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 24,
-                        ),
-                        child: WordTableScreen(),
-                      ),
+                      child: WordTableScreen(),
                     ),
                   ),
                 ),
@@ -74,34 +65,9 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
           ),
           if (widget.showBackButton)
             Positioned(
-              top: 24,
-              left: 24,
-              child: GestureDetector(
-                onTap: () {
-                  context.router.push(HomeRoute());
-                },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              left: screenHeight * 0.08,
+              top: screenHeight * 0.025,
+              child: CustomBackButton(),
             )
         ],
       ),
@@ -136,7 +102,7 @@ class _WordTableScreenState extends State<WordTableScreen> {
     return BlocProvider(
       create: (BuildContext context) => SpreadshitBloc(),
       child: Scaffold(
-        appBar: AppBar(title: Text('Список слів')),
+        backgroundColor: Colors.white,
         body: BlocBuilder<SpreadshitBloc, SpreadshitState>(
           builder: (context, state) {
             if (state is SpreadshitLoadingState) {
@@ -147,24 +113,89 @@ class _WordTableScreenState extends State<WordTableScreen> {
               final words = state.words;
 
               return SingleChildScrollView(
+                padding: EdgeInsets.zero,
                 controller: _scrollController,
-                child: PaginatedDataTable(
-                  header: Text('Таблиця слів'),
-                  columns: [
-                    DataColumn(label: Text('ID')),
-                    DataColumn(label: Text('Word ID')),
-                    DataColumn(label: Text('Morphology Process')),
-                    DataColumn(label: Text('Meaning')),
-                    DataColumn(label: Text('Explanation')),
-                    // DataColumn(label: Text('Type')),
-                  ],
-                  source: _WordDataTableSource(words),
-                  rowsPerPage: 10, // Количество строк на странице
+                child: DataTableTheme(
+                  data: DataTableThemeData(
+                    decoration: BoxDecoration(color: Colors.white),
+                    headingRowColor: MaterialStateProperty.all(
+                        Colors.white), // Header row color
+                    dataRowColor: MaterialStateProperty.resolveWith<Color?>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.selected)) {
+                          return Colors.white; // Row color when selected
+                        }
+                        return Colors.white; // Default row color
+                      },
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        cardColor: Colors.white,
+                        cardTheme: CardTheme(
+                          color: Colors.white,
+                          // ✅ Make all cards pure white
+                          surfaceTintColor: Colors.white,
+                          // ✅ Remove elevation tint
+                          shadowColor: Colors.transparent,
+                          // ✅ Remove shadow
+                          elevation: 0,
+                          margin: EdgeInsets.zero,
+
+                          // ✅ No shadow effect
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius
+                                .zero, // ✅ Remove rounded corners if needed
+                            side: BorderSide(
+                                color:
+                                    Colors.white), // ✅ Ensures no border color
+                          ),
+                        ),
+                        dividerColor: Colors.white,
+                        dataTableTheme: DataTableThemeData(
+                          headingRowColor:
+                              WidgetStateProperty.resolveWith<Color>(
+                                  (Set<WidgetState> states) {
+                            // Set color for heading row
+                            return Colors.white; // example color
+                          }),
+                          dataRowColor: WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                            // Set color for data rows
+                            return Colors.white; // example color
+                          }),
+                          // Add other customizations here
+                        ),
+                      ),
+                      child: Container(
+                        color: Colors.white,
+                        padding: EdgeInsets.zero,
+                        child: PaginatedDataTable(
+                          columns: [
+                            DataColumn(label: Text('ID')),
+                            DataColumn(label: Text('Word ID')),
+                            DataColumn(label: Text('Morphology Process')),
+                            DataColumn(label: Text('Meaning')),
+                            DataColumn(label: Text('Explanation')),
+                            // DataColumn(label: Text('Type')),
+                          ],
+                          horizontalMargin: 0,
+                          headingRowColor:
+                              MaterialStateProperty.all(Colors.white),
+                          arrowHeadColor: Colors.black,
+                          source: _WordDataTableSource(words),
+                          rowsPerPage: 10, // Количество строк на странице
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               );
             }
 
-            return Center(child: Text('Нет данных'));
+            return Center(child: Text('Нема даних'));
           },
         ),
       ),

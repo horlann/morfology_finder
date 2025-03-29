@@ -26,6 +26,7 @@ class AlternationItems extends Table {
 
   TextColumn get morphology_process => text()();
   TextColumn get explanation => text()();
+  TextColumn? get meaning => text()();
 }
 
 @DriftDatabase(tables: [WordItems, AlternationItems])
@@ -66,6 +67,7 @@ Future<void> loadJsonAndInsert2(Database db) async {
       wordId: item['word_id'],
       explanation: item['explanation'],
       morphology_process: item['morphology_process'],
+      meaning: item['meaning'],
       // Add other fields here...
     );
 

@@ -301,9 +301,15 @@ class $AlternationItemsTable extends AlternationItems
   late final GeneratedColumn<String> explanation = GeneratedColumn<String>(
       'explanation', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _meaningMeta =
+      const VerificationMeta('meaning');
+  @override
+  late final GeneratedColumn<String> meaning = GeneratedColumn<String>(
+      'meaning', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [idPr, id, wordId, morphology_process, explanation];
+      [idPr, id, wordId, morphology_process, explanation, meaning];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -345,6 +351,12 @@ class $AlternationItemsTable extends AlternationItems
     } else if (isInserting) {
       context.missing(_explanationMeta);
     }
+    if (data.containsKey('meaning')) {
+      context.handle(_meaningMeta,
+          meaning.isAcceptableOrUnknown(data['meaning']!, _meaningMeta));
+    } else if (isInserting) {
+      context.missing(_meaningMeta);
+    }
     return context;
   }
 
@@ -364,6 +376,8 @@ class $AlternationItemsTable extends AlternationItems
           DriftSqlType.string, data['${effectivePrefix}morphology_process'])!,
       explanation: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}explanation'])!,
+      meaning: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}meaning'])!,
     );
   }
 
@@ -379,12 +393,14 @@ class Alternation extends DataClass implements Insertable<Alternation> {
   final int wordId;
   final String morphology_process;
   final String explanation;
+  final String meaning;
   const Alternation(
       {required this.idPr,
       required this.id,
       required this.wordId,
       required this.morphology_process,
-      required this.explanation});
+      required this.explanation,
+      required this.meaning});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -393,6 +409,7 @@ class Alternation extends DataClass implements Insertable<Alternation> {
     map['word_id'] = Variable<int>(wordId);
     map['morphology_process'] = Variable<String>(morphology_process);
     map['explanation'] = Variable<String>(explanation);
+    map['meaning'] = Variable<String>(meaning);
     return map;
   }
 
@@ -403,6 +420,7 @@ class Alternation extends DataClass implements Insertable<Alternation> {
       wordId: Value(wordId),
       morphology_process: Value(morphology_process),
       explanation: Value(explanation),
+      meaning: Value(meaning),
     );
   }
 
@@ -416,6 +434,7 @@ class Alternation extends DataClass implements Insertable<Alternation> {
       morphology_process:
           serializer.fromJson<String>(json['morphology_process']),
       explanation: serializer.fromJson<String>(json['explanation']),
+      meaning: serializer.fromJson<String>(json['meaning']),
     );
   }
   @override
@@ -427,6 +446,7 @@ class Alternation extends DataClass implements Insertable<Alternation> {
       'wordId': serializer.toJson<int>(wordId),
       'morphology_process': serializer.toJson<String>(morphology_process),
       'explanation': serializer.toJson<String>(explanation),
+      'meaning': serializer.toJson<String>(meaning),
     };
   }
 
@@ -435,13 +455,15 @@ class Alternation extends DataClass implements Insertable<Alternation> {
           int? id,
           int? wordId,
           String? morphology_process,
-          String? explanation}) =>
+          String? explanation,
+          String? meaning}) =>
       Alternation(
         idPr: idPr ?? this.idPr,
         id: id ?? this.id,
         wordId: wordId ?? this.wordId,
         morphology_process: morphology_process ?? this.morphology_process,
         explanation: explanation ?? this.explanation,
+        meaning: meaning ?? this.meaning,
       );
   Alternation copyWithCompanion(AlternationItemsCompanion data) {
     return Alternation(
@@ -453,6 +475,7 @@ class Alternation extends DataClass implements Insertable<Alternation> {
           : this.morphology_process,
       explanation:
           data.explanation.present ? data.explanation.value : this.explanation,
+      meaning: data.meaning.present ? data.meaning.value : this.meaning,
     );
   }
 
@@ -463,14 +486,15 @@ class Alternation extends DataClass implements Insertable<Alternation> {
           ..write('id: $id, ')
           ..write('wordId: $wordId, ')
           ..write('morphology_process: $morphology_process, ')
-          ..write('explanation: $explanation')
+          ..write('explanation: $explanation, ')
+          ..write('meaning: $meaning')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(idPr, id, wordId, morphology_process, explanation);
+      Object.hash(idPr, id, wordId, morphology_process, explanation, meaning);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -479,7 +503,8 @@ class Alternation extends DataClass implements Insertable<Alternation> {
           other.id == this.id &&
           other.wordId == this.wordId &&
           other.morphology_process == this.morphology_process &&
-          other.explanation == this.explanation);
+          other.explanation == this.explanation &&
+          other.meaning == this.meaning);
 }
 
 class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
@@ -488,12 +513,14 @@ class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
   final Value<int> wordId;
   final Value<String> morphology_process;
   final Value<String> explanation;
+  final Value<String> meaning;
   const AlternationItemsCompanion({
     this.idPr = const Value.absent(),
     this.id = const Value.absent(),
     this.wordId = const Value.absent(),
     this.morphology_process = const Value.absent(),
     this.explanation = const Value.absent(),
+    this.meaning = const Value.absent(),
   });
   AlternationItemsCompanion.insert({
     this.idPr = const Value.absent(),
@@ -501,16 +528,19 @@ class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
     required int wordId,
     required String morphology_process,
     required String explanation,
+    required String meaning,
   })  : id = Value(id),
         wordId = Value(wordId),
         morphology_process = Value(morphology_process),
-        explanation = Value(explanation);
+        explanation = Value(explanation),
+        meaning = Value(meaning);
   static Insertable<Alternation> custom({
     Expression<int>? idPr,
     Expression<int>? id,
     Expression<int>? wordId,
     Expression<String>? morphology_process,
     Expression<String>? explanation,
+    Expression<String>? meaning,
   }) {
     return RawValuesInsertable({
       if (idPr != null) 'id_pr': idPr,
@@ -518,6 +548,7 @@ class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
       if (wordId != null) 'word_id': wordId,
       if (morphology_process != null) 'morphology_process': morphology_process,
       if (explanation != null) 'explanation': explanation,
+      if (meaning != null) 'meaning': meaning,
     });
   }
 
@@ -526,13 +557,15 @@ class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
       Value<int>? id,
       Value<int>? wordId,
       Value<String>? morphology_process,
-      Value<String>? explanation}) {
+      Value<String>? explanation,
+      Value<String>? meaning}) {
     return AlternationItemsCompanion(
       idPr: idPr ?? this.idPr,
       id: id ?? this.id,
       wordId: wordId ?? this.wordId,
       morphology_process: morphology_process ?? this.morphology_process,
       explanation: explanation ?? this.explanation,
+      meaning: meaning ?? this.meaning,
     );
   }
 
@@ -554,6 +587,9 @@ class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
     if (explanation.present) {
       map['explanation'] = Variable<String>(explanation.value);
     }
+    if (meaning.present) {
+      map['meaning'] = Variable<String>(meaning.value);
+    }
     return map;
   }
 
@@ -564,7 +600,8 @@ class AlternationItemsCompanion extends UpdateCompanion<Alternation> {
           ..write('id: $id, ')
           ..write('wordId: $wordId, ')
           ..write('morphology_process: $morphology_process, ')
-          ..write('explanation: $explanation')
+          ..write('explanation: $explanation, ')
+          ..write('meaning: $meaning')
           ..write(')'))
         .toString();
   }
@@ -735,6 +772,7 @@ typedef $$AlternationItemsTableCreateCompanionBuilder
   required int wordId,
   required String morphology_process,
   required String explanation,
+  required String meaning,
 });
 typedef $$AlternationItemsTableUpdateCompanionBuilder
     = AlternationItemsCompanion Function({
@@ -743,6 +781,7 @@ typedef $$AlternationItemsTableUpdateCompanionBuilder
   Value<int> wordId,
   Value<String> morphology_process,
   Value<String> explanation,
+  Value<String> meaning,
 });
 
 class $$AlternationItemsTableFilterComposer
@@ -769,6 +808,9 @@ class $$AlternationItemsTableFilterComposer
 
   ColumnFilters<String> get explanation => $composableBuilder(
       column: $table.explanation, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get meaning => $composableBuilder(
+      column: $table.meaning, builder: (column) => ColumnFilters(column));
 }
 
 class $$AlternationItemsTableOrderingComposer
@@ -795,6 +837,9 @@ class $$AlternationItemsTableOrderingComposer
 
   ColumnOrderings<String> get explanation => $composableBuilder(
       column: $table.explanation, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get meaning => $composableBuilder(
+      column: $table.meaning, builder: (column) => ColumnOrderings(column));
 }
 
 class $$AlternationItemsTableAnnotationComposer
@@ -820,6 +865,9 @@ class $$AlternationItemsTableAnnotationComposer
 
   GeneratedColumn<String> get explanation => $composableBuilder(
       column: $table.explanation, builder: (column) => column);
+
+  GeneratedColumn<String> get meaning =>
+      $composableBuilder(column: $table.meaning, builder: (column) => column);
 }
 
 class $$AlternationItemsTableTableManager extends RootTableManager<
@@ -854,6 +902,7 @@ class $$AlternationItemsTableTableManager extends RootTableManager<
             Value<int> wordId = const Value.absent(),
             Value<String> morphology_process = const Value.absent(),
             Value<String> explanation = const Value.absent(),
+            Value<String> meaning = const Value.absent(),
           }) =>
               AlternationItemsCompanion(
             idPr: idPr,
@@ -861,6 +910,7 @@ class $$AlternationItemsTableTableManager extends RootTableManager<
             wordId: wordId,
             morphology_process: morphology_process,
             explanation: explanation,
+            meaning: meaning,
           ),
           createCompanionCallback: ({
             Value<int> idPr = const Value.absent(),
@@ -868,6 +918,7 @@ class $$AlternationItemsTableTableManager extends RootTableManager<
             required int wordId,
             required String morphology_process,
             required String explanation,
+            required String meaning,
           }) =>
               AlternationItemsCompanion.insert(
             idPr: idPr,
@@ -875,6 +926,7 @@ class $$AlternationItemsTableTableManager extends RootTableManager<
             wordId: wordId,
             morphology_process: morphology_process,
             explanation: explanation,
+            meaning: meaning,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

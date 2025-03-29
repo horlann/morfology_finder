@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'package:flutter_web_worker_example/features/word_details/bloc/word_details_bloc.dart';
-
 import 'package:flutter_web_worker_example/core/router/router.dart';
+import 'package:flutter_web_worker_example/features/home/view/home_screen.dart';
+import 'package:flutter_web_worker_example/features/word_details/bloc/word_details_bloc.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
 class WordDetailsScreen extends StatefulWidget {
@@ -38,6 +36,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
           } else if (state is WordDetailsFailureState) {
             return Center(child: Text('Ошибка: ${state.exception}'));
           } else if (state is WordDetailsLoadedState) {
+            final morphologyProcess = state.wordModel.info?.morphology_process;
             return Stack(
               children: [
                 Container(
@@ -54,32 +53,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 Positioned(
                   left: screenWidth * 0.12,
                   top: screenHeight * 0.025,
-                  child: GestureDetector(
-                    onTap: () {
-                      context.router.maybePop();
-                    },
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: CustomBackButton(),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -102,7 +76,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 80),
+                          SizedBox(height: 40),
                           Text(
                             widget.wordModel.wordSplitWord ??
                                 'Цього слова в базі даних немає',
@@ -112,19 +86,16 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(height: 25),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text.rich(
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: (state.wordModel.info
-                                                    ?.morphology_process ??
-                                                '')
-                                            .isEmpty
-                                        ? 'Мофонологічного пояснення немає'
-                                        : '${(state.wordModel.info?.morphology_process ?? '').split(', ').first})',
+                                    text: (morphologyProcess ?? '').isEmpty
+                                        ? 'Морфонологічного пояснення немає'
+                                        : '${(morphologyProcess ?? '').split(', ').first})',
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -143,31 +114,58 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  TextSpan(
-                                    text: (state.wordModel.info
-                                                    ?.morphology_process ??
-                                                '')
-                                            .isEmpty
-                                        ? ''
-                                        : '\n\n(${(state.wordModel.info?.morphology_process ?? '').split(', ').last}',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                  if ((morphologyProcess ?? '')
+                                          .split(', ')
+                                          .length >
+                                      1)
+                                    TextSpan(
+                                      text: (morphologyProcess ?? '').isEmpty
+                                          ? ''
+                                          : '\n\n(${(morphologyProcess ?? '').split(', ').last}',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  ),
-                                  TextSpan(
-                                    text: (state.wordModel.info?.explanation ??
-                                                '')
-                                            .isEmpty
-                                        ? ''
-                                        : ' - ${(state.wordModel.info?.explanation ?? '').split(';').last}',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                  if ((state.wordModel.info?.explanation ?? '')
+                                          .split(';')
+                                          .length >
+                                      1)
+                                    TextSpan(
+                                      text: (state.wordModel.info
+                                                      ?.explanation ??
+                                                  '')
+                                              .isEmpty
+                                          ? ''
+                                          : ' - ${(state.wordModel.info?.explanation ?? '').split(';').last}',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  ),
+                                  if (state.wordModel.info?.meaning != null &&
+                                      state.wordModel.info!.meaning
+                                          .isNotEmpty) ...[
+                                    TextSpan(
+                                      text: '\n\nПояснювальна ремарка - ',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          '${state.wordModel.info?.meaning.replaceAll('(', '').replaceAll(')', '')}',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ]
                                 ],
                               ),
                             ),

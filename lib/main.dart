@@ -47,6 +47,7 @@ Future<void> loadJsonAndInsert2(Database db) async {
       wordId: item['word_id'],
       morphology_process: item['morphology_process'],
       explanation: item['explanation'],
+      meaning: item['meaning'],
       // Add other fields here...
     );
 

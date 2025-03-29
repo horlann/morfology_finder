@@ -5,7 +5,6 @@ import 'package:flutter_web_worker_example/core/router/router.dart';
 import 'package:flutter_web_worker_example/features/word_search/bloc/word_bloc.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
 
-
 @RoutePage()
 class WordSearchScreen extends StatefulWidget {
   const WordSearchScreen({super.key});
@@ -51,7 +50,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: screenWidth * 0.25,
-                vertical: screenHeight * 0.1,
+                vertical: 20,
               ),
               child: Container(
                 width: screenWidth * 0.9,
@@ -161,7 +160,7 @@ class _ListState extends State<_List> {
           onTap: () {
             final word = widget.words[index];
             context.read<WordBloc>().add(WordSelectEvent(word));
-            context.router.push(WordDetailsRoute(word: word));
+            context.router.push(WordDetailsRoute(wordModel: word));
           },
         );
       },

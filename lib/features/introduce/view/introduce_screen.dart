@@ -30,7 +30,7 @@ class IntroduceScreen extends StatelessWidget {
               Text(
                 'Л. М. Полюга',
                 style: GoogleFonts.merriweather(
-                  fontSize: screenWidth > 600 ? 40 : 30,
+                  fontSize: screenWidth > 600 ? 36 : 26,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -41,8 +41,8 @@ class IntroduceScreen extends StatelessWidget {
                 children: [
                   Positioned(
                     child: Container(
-                      width: screenWidth * 0.4,
-                      height: screenHeight * 0.75,
+                      width: screenWidth * 0.3,
+                      height: screenHeight * 0.65,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 4),
                       ),
@@ -52,7 +52,7 @@ class IntroduceScreen extends StatelessWidget {
                     'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.oldStandardTt(
-                      fontSize: screenWidth > 600 ? 68 : 48,
+                      fontSize: screenWidth > 600 ? 55 : 35,
                       fontWeight: FontWeight.bold,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
@@ -64,7 +64,7 @@ class IntroduceScreen extends StatelessWidget {
                     'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.oldStandardTt(
-                      fontSize: screenWidth > 600 ? 68 : 48,
+                      fontSize: screenWidth > 600 ? 55 : 35,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       horizontal: (screenWidth - tabWidth * 3) / 2,
                     ),
                     child: SizedBox(
-                      height: screenHeight * 0.08,
+                      height: 70,
                       width: tabWidth * 3,
                       child: TabBar(
                         isScrollable: false,
@@ -96,34 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned(
-                    left: screenWidth * 0.12,
+                    left: screenHeight * 0.08,
                     top: screenHeight * 0.025,
-                    child: GestureDetector(
-                      onTap: () {
-                        context.router.maybePop();
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2,
-                          ),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: CustomBackButton(),
                   ),
                 ],
               ),
@@ -139,6 +114,85 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// class BackButton extends StatelessWidget {
+//   const BackButton({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () {
+//         context.router.maybePop();
+//       },
+//       child: Container(
+//         width: 40,
+//         height: 40,
+//         decoration: BoxDecoration(
+//           color: Colors.transparent,
+//           borderRadius: BorderRadius.circular(8),
+//           border: Border.all(
+//             color: Colors.white,
+//             width: 2,
+//           ),
+//         ),
+//         child: Center(
+//           child: Padding(
+//             padding: const EdgeInsets.only(left: 8),
+//             child: Icon(
+//               Icons.arrow_back_ios,
+//               color: Colors.white,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+class CustomBackButton extends StatefulWidget {
+  @override
+  _HoverButtonState createState() => _HoverButtonState();
+}
+
+class _HoverButtonState extends State<CustomBackButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.router.maybePop();
+      },
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? Colors.white.withValues(alpha: 0.5)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.white,
+              width: 2,
+            ),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),
