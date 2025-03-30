@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: (screenWidth - tabWidth * 3) / 2,
-                    ),
+                    ).copyWith(top: 24),
                     child: SizedBox(
                       height: 70,
                       width: tabWidth * 3,
@@ -96,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned(
-                    left: screenHeight * 0.08,
-                    top: screenHeight * 0.025,
+                    left: screenHeight * 0.075,
+                    top: 24 + screenHeight * 0.025,
                     child: CustomBackButton(),
                   ),
                 ],
@@ -170,6 +170,8 @@ class _HoverButtonState extends State<CustomBackButton> {
         context.router.maybePop();
       },
       child: MouseRegion(
+        cursor:
+            SystemMouseCursors.click, // Change the cursor to a pointer (hand)
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
         child: AnimatedContainer(

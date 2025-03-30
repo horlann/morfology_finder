@@ -44,7 +44,7 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
                     bottom: 20,
                   ),
                   child: Container(
-                    width: screenWidth * 0.9,
+                    width: screenWidth - 2 * (screenHeight * 0.075),
                     height: screenHeight * 0.75,
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -53,8 +53,8 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 24,
+                        horizontal: 0,
+                        vertical: 0,
                       ),
                       child: WordTableScreen(),
                     ),
@@ -65,7 +65,7 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
           ),
           if (widget.showBackButton)
             Positioned(
-              left: screenHeight * 0.08,
+              left: screenHeight * 0.075,
               top: screenHeight * 0.025,
               child: CustomBackButton(),
             )
@@ -181,7 +181,7 @@ class _WordTableScreenState extends State<WordTableScreen> {
                             DataColumn(label: Text('Explanation')),
                             // DataColumn(label: Text('Type')),
                           ],
-                          horizontalMargin: 0,
+                          horizontalMargin: 16,
                           headingRowColor:
                               MaterialStateProperty.all(Colors.white),
                           arrowHeadColor: Colors.black,

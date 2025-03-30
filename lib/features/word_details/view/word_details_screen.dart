@@ -52,7 +52,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 ),
                 Positioned(
                   left: screenWidth * 0.12,
-                  top: screenHeight * 0.025,
+                  top: 24 + screenHeight * 0.025,
                   child: CustomBackButton(),
                 ),
                 Padding(

@@ -48,25 +48,60 @@ class IntroduceScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Text(
+                  //   'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.playfairDisplay(
+                  //       fontSize: screenWidth > 600 ? 70 : 50,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.white),
+                  // ),
+                  // Text(
+                  //   'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.playfairDisplay(
+                  //     fontSize: screenWidth > 600 ? 70 : 50,
+                  //     fontWeight: FontWeight.bold,
+                  //     foreground: Paint()
+                  //       ..style = PaintingStyle.stroke
+                  //       ..strokeWidth = 3
+                  //       ..color = Colors.black, // Border color
+                  //     shadows: [
+                  //       Shadow(
+                  //         offset: Offset(4.0, 3.0), // X and Y offset
+                  //         blurRadius: 0.0, // Blur effect
+                  //         color: Colors.black, // Shadow color
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Text(
                     'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.oldStandardTt(
-                      fontSize: screenWidth > 600 ? 55 : 35,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 70, // Adjust size based on screen width
                       fontWeight: FontWeight.bold,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
-                        ..strokeWidth = 3
-                        ..color = Colors.black,
+                        ..strokeWidth = 5
+                        ..color = Colors.black, // Border color
                     ),
                   ),
+                  // Main filled text
                   Text(
                     'СЛОВНИК\nУКРАЇНСЬКИХ\nМОРФЕМ',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.oldStandardTt(
-                      fontSize: screenWidth > 600 ? 55 : 35,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 70, // Adjust size based on screen width
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.white, // Main text color
+                      shadows: [
+                        Shadow(
+                          offset: Offset(4.0, 3.0), // X and Y offset
+                          blurRadius: 0.0, // Blur effect
+                          color: Colors.black, // Shadow color
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -92,7 +127,7 @@ class IntroduceScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Натисни, \nщоб почати',
+                      'Натисни,щоб почати',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
                         fontSize: screenWidth > 600 ? 20 : 16,

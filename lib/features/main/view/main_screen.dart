@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
                     top: 20,
                   ),
                   child: Container(
-                    width: screenWidth * 0.9,
+                    width: screenWidth - 2 * (screenHeight * 0.075),
                     height: screenHeight * 0.8,
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
