@@ -1,11 +1,13 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:flutter_web_worker_example/core/router/router.dart';
-import 'package:flutter_web_worker_example/features/home/view/home_screen.dart';
 import 'package:flutter_web_worker_example/features/word_details/bloc/word_details_bloc.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_web_worker_example/ui/widgets/custom_back_button.dart';
 
 @RoutePage()
 class WordDetailsScreen extends StatefulWidget {
@@ -101,90 +103,98 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                     ),
                   ),
                   Positioned(
-                    left: screenWidth * 0.12,
-                    top: 24 + screenHeight * 0.025,
+                    left: screenWidth * 0.08,
+                    top: screenHeight * 0.025,
                     child: CustomBackButton(),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.25,
-                      vertical: screenHeight * 0.1,
-                    ),
-                    child: Container(
-                      width: screenWidth * 0.9,
-                      height: screenHeight * 0.75,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.04,
+                        top: (72 + 24) + screenHeight * 0.04,
+                        right: screenWidth * 0.04,
+                        bottom: screenHeight * 0.04,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 20,
+                      child: Container(
+                        width: screenWidth * 0.84,
+                        height: screenHeight * 0.72,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.04,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 40),
-                            Text(
-                              widget.wordModel.wordSplitWord ??
-                                  'Цього слова в базі даних немає',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 25),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    if (firstPart.isNotEmpty) ...textSpans,
-                                    if (firstPart.isEmpty)
-                                      TextSpan(
-                                        text:
-                                            "Морфонологічного пояснення немає",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    if (thirdPart != null &&
-                                        thirdPart.isNotEmpty) ...[
-                                      TextSpan(
-                                        text: '\nПояснювальна ремарка - ',
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: thirdPart,
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ],
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 20,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 40),
+                              Text(
+                                widget.wordModel.wordSplitWord ??
+                                    'Цього слова в базі даних немає',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 25),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      if (firstPart.isNotEmpty) ...textSpans,
+                                      if (firstPart.isEmpty)
+                                        TextSpan(
+                                          text:
+                                              "Морфонологічного пояснення немає",
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      if (thirdPart != null &&
+                                          thirdPart.isNotEmpty) ...[
+                                        TextSpan(
+                                          text: '\nПояснювальна ремарка - ',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: thirdPart,
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    bottom: screenHeight * 0.04,
                     left: screenWidth * 0.33,
                     right: screenWidth * 0.33,
+                    bottom: screenHeight * 0.04,
                     child: OutlinedButton(
                       onPressed: () {
                         context.router

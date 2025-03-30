@@ -47,62 +47,68 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.25,
-                vertical: 20,
-              ),
-              child: Container(
-                width: screenWidth * 0.9,
-                height: screenHeight * 0.8,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.04,
+                  vertical: screenHeight * 0.04,
                 ),
-                child: Column(
-                  children: [
-                    Builder(builder: (context) {
-                      return TextField(
-                        controller: _searchController,
-                        onChanged: (text) => context
-                            .read<WordBloc>()
-                            .add(WordTextChangeEvent(text)),
-                        decoration: InputDecoration(
-                          labelText: 'Пошук слова',
-                          labelStyle: TextStyle(
-                            color: Colors.black.withAlpha(100),
-                            fontSize: 16,
+                child: Container(
+                  width: screenWidth * 0.84,
+                  height: screenHeight * 0.72,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.02,
+                    vertical: screenHeight * 0.04,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      Builder(builder: (context) {
+                        return TextField(
+                          controller: _searchController,
+                          onChanged: (text) => context
+                              .read<WordBloc>()
+                              .add(WordTextChangeEvent(text)),
+                          decoration: InputDecoration(
+                            labelText: 'Пошук слова',
+                            labelStyle: TextStyle(
+                              color: Colors.black.withAlpha(100),
+                              fontSize: 16,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide:
+                                  const BorderSide(color: Colors.grey, width: 1),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {},
+                            ),
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide:
-                                const BorderSide(color: Colors.grey, width: 1),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.search),
-                            onPressed: () {},
-                          ),
+                        );
+                      }),
+                      const SizedBox(height: 20),
+                      Expanded(
+                        child: BlocBuilder<WordBloc, WordState>(
+                          builder: (context, state) {
+                            if (state is WordLoadedState) {
+                              return _List(words: (state).words);
+                            } else {
+                              return _List(words: []);
+                            }
+                          },
                         ),
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    }),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: BlocBuilder<WordBloc, WordState>(
-                        builder: (context, state) {
-                          if (state is WordLoadedState) {
-                            return _List(words: (state).words);
-                          } else {
-                            return _List(words: []);
-                          }
-                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

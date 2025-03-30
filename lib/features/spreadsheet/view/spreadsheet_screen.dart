@@ -1,14 +1,19 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_worker_example/features/home/view/home_screen.dart';
+
 import 'package:flutter_web_worker_example/features/spreadsheet/bloc/sp_bl.dart';
+import 'package:flutter_web_worker_example/ui/widgets/custom_back_button.dart';
 
 @RoutePage()
 class SpreadsheetScreen extends StatefulWidget {
   final bool showBackButton;
 
-  const SpreadsheetScreen({super.key, this.showBackButton = false});
+  const SpreadsheetScreen({
+    super.key,
+    this.showBackButton = false,
+  });
 
   @override
   State<SpreadsheetScreen> createState() => _SpreadsheetScreenState();
@@ -33,42 +38,82 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 20 + (widget.showBackButton ? 70 : 0),
-                    bottom: 20,
-                  ),
-                  child: Container(
-                    width: screenWidth - 2 * (screenHeight * 0.075),
-                    height: screenHeight * 0.75,
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+          if (widget.showBackButton == true)
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: screenWidth * 0.04,
+                      top: (72 + 24) + screenHeight * 0.04,
+                      right: screenWidth * 0.04,
+                      bottom: 0,
                     ),
-                    child: Padding(
+                    child: Container(
+                      width: screenWidth * 0.84,
+                      height: screenHeight * 0.72,
                       padding: EdgeInsets.symmetric(
-                        horizontal: 0,
-                        vertical: 0,
+                        horizontal: screenWidth * 0.02,
+                        vertical: screenHeight * 0.04,
                       ),
-                      child: WordTableScreen(),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 0,
+                          vertical: 0,
+                        ),
+                        child: WordTableScreen(),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          if (widget.showBackButton)
+          if (widget.showBackButton == true)
             Positioned(
-              left: screenHeight * 0.075,
+              left: screenWidth * 0.08,
               top: screenHeight * 0.025,
               child: CustomBackButton(),
-            )
+            ),
+          if (widget.showBackButton == false)
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                      vertical: screenHeight * 0.04,
+                    ),
+                    child: Container(
+                      width: screenWidth * 0.84,
+                      height: screenHeight * 0.72,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.02,
+                        vertical: screenHeight * 0.04,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 0,
+                          vertical: 0,
+                        ),
+                        child: WordTableScreen(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
@@ -118,11 +163,11 @@ class _WordTableScreenState extends State<WordTableScreen> {
                 child: DataTableTheme(
                   data: DataTableThemeData(
                     decoration: BoxDecoration(color: Colors.white),
-                    headingRowColor: MaterialStateProperty.all(
+                    headingRowColor: WidgetStateProperty.all(
                         Colors.white), // Header row color
-                    dataRowColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.selected)) {
+                    dataRowColor: WidgetStateProperty.resolveWith<Color?>(
+                      (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.selected)) {
                           return Colors.white; // Row color when selected
                         }
                         return Colors.white; // Default row color
@@ -181,12 +226,13 @@ class _WordTableScreenState extends State<WordTableScreen> {
                             DataColumn(label: Text('Explanation')),
                             // DataColumn(label: Text('Type')),
                           ],
+                          source: _WordDataTableSource(words),
+                          rowsPerPage: 10,
+                          // Количество строк на странице
                           horizontalMargin: 16,
                           headingRowColor:
-                              MaterialStateProperty.all(Colors.white),
+                              WidgetStateProperty.all(Colors.white),
                           arrowHeadColor: Colors.black,
-                          source: _WordDataTableSource(words),
-                          rowsPerPage: 10, // Количество строк на странице
                         ),
                       ),
                     ),

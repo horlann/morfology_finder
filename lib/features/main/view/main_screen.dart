@@ -35,13 +35,17 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04,
+                    vertical: screenHeight * 0.04,
                   ),
                   child: Container(
-                    width: screenWidth - 2 * (screenHeight * 0.075),
-                    height: screenHeight * 0.8,
-                    padding: EdgeInsets.all(20),
+                    width: screenWidth * 0.84,
+                    height: screenHeight * 0.72,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.02,
+                      vertical: screenHeight * 0.04,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
