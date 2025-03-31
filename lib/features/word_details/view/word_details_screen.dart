@@ -110,14 +110,14 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                     alignment: Alignment.topCenter,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: screenWidth * 0.28,
+                        left: screenWidth * 0.32,
                         top: (72 + 24) + screenHeight * 0.04,
-                        right: screenWidth * 0.28,
+                        right: screenWidth * 0.32,
                         bottom: screenHeight * 0.04,
                       ),
                       child: Container(
                         width: screenWidth * 0.84,
-                        height: screenHeight * 0.56,
+                        height: screenHeight * 0.60,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.02,
                           vertical: screenHeight * 0.04,
@@ -191,38 +191,43 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                     ),
                   ),
                   Positioned(
-                    left: screenWidth * 0.33,
-                    right: screenWidth * 0.33,
-                    bottom: screenHeight * 0.04,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        context.router
-                            .push(SpreadsheetRoute(showBackButton: true));
-                      },
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.04,
-                          vertical: screenHeight * 0.02,
-                        ),
-                        side: BorderSide(
-                          color: Color(0xFF4A515C),
-                          width: 2,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                    left: screenWidth * 0.36,
+                    right: screenWidth * 0.36,
+                    bottom: screenHeight * 0.12,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: screenWidth * 0.32, // Уменьшил ширину кнопки
                       ),
-                      child: Text(
-                        'Подивитися таблицю всіх слів \nз морфологічними процесами',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          fontSize: screenWidth > 600 ? 20 : 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF362A2C),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          context.router
+                              .push(SpreadsheetRoute(showBackButton: true));
+                        },
+                        style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                            vertical: screenHeight * 0.02,
+                          ),
+                          side: BorderSide(
+                            color: Color(0xFF4A515C),
+                            width: 2,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
+                        child: Text(
+                          'Подивитися таблицю всіх слів \nз морфологічними процесами',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(
+                            fontSize: screenWidth > 600 ? 20 : 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF362A2C),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                        ),
                       ),
                     ),
                   ),

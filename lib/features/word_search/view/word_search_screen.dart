@@ -51,7 +51,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.28,
+                  horizontal: screenWidth * 0.32,
                   vertical: screenHeight * 0.04,
                 ),
                 child: Container(
@@ -63,7 +63,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
                     children: [

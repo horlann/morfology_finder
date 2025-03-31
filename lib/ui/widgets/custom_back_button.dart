@@ -35,10 +35,15 @@ class _HoverButtonState extends State<CustomBackButton> {
               width: 2,
             ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(
+                left: 8,
+              ),
               child: Icon(
                 Icons.arrow_back_ios,
                 color: Color(0xFF4A515C),
