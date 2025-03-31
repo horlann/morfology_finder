@@ -51,7 +51,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.04,
+                  horizontal: screenWidth * 0.28,
                   vertical: screenHeight * 0.04,
                 ),
                 child: Container(

@@ -5,8 +5,8 @@ import 'package:flutter_web_worker_example/core/router/router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
-class IntroduceScreen extends StatelessWidget {
-  const IntroduceScreen({super.key});
+class TitleScreen extends StatelessWidget {
+  const TitleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class IntroduceScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.blue.shade100, Colors.pink.shade100],
+              colors: [Color(0xFFB3D9FF), Color(0xFFF8AFC3)],
             ),
           ),
           child: Column(
@@ -100,7 +100,7 @@ class IntroduceScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Натисни,щоб почати',
+                      'Натисни, щоб почати',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
                         fontSize: screenWidth > 600 ? 20 : 16,

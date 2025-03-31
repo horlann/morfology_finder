@@ -27,7 +27,7 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [IntroduceScreen]
+/// [TitleScreen]
 class IntroduceRoute extends PageRouteInfo<void> {
   const IntroduceRoute({List<PageRouteInfo>? children})
     : super(IntroduceRoute.name, initialChildren: children);
@@ -37,7 +37,7 @@ class IntroduceRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const IntroduceScreen();
+      return const TitleScreen();
     },
   );
 }

@@ -98,7 +98,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.blue.shade100, Colors.pink.shade100],
+                        colors: [Color(0xFFB3D9FF), Color(0xFFF8AFC3)],
                       ),
                     ),
                   ),
@@ -111,14 +111,14 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                     alignment: Alignment.topCenter,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: screenWidth * 0.04,
+                        left: screenWidth * 0.28,
                         top: (72 + 24) + screenHeight * 0.04,
-                        right: screenWidth * 0.04,
+                        right: screenWidth * 0.28,
                         bottom: screenHeight * 0.04,
                       ),
                       child: Container(
                         width: screenWidth * 0.84,
-                        height: screenHeight * 0.72,
+                        height: screenHeight * 0.56,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.02,
                           vertical: screenHeight * 0.04,

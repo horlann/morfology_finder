@@ -20,9 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    debugPrint(screenWidth.toString());
     final screenHeight = MediaQuery.sizeOf(context).height;
-    debugPrint(screenHeight.toString());
     final tabWidth = screenWidth * 0.12;
 
     return Scaffold(
@@ -32,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: screenWidth,
         height: screenHeight,
         decoration: BoxDecoration(
-          color: Colors.blue.shade100,
+          color: Color(0xFFB3D9FF),
         ),
         child: DefaultTabController(
           length: 3,
