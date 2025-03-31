@@ -1,46 +1,49 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_web_worker_example/core/db/db.dart';
+import 'package:flutter_web_worker_example/features/spreadsheet/data/models/aggregated_word.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
 
 import '../../../main.dart';
 
 // 🎯 Определение событий
-abstract class SpreadshitEvent {}
+abstract class SpreadsheetEvent {}
 
-class SpreadshitLoadEvent extends SpreadshitEvent {}
+class SpreadsheetLoadEvent extends SpreadsheetEvent {}
 
 // 🎯 Определение состояний
-abstract class SpreadshitState {}
+abstract class SpreadsheetState {}
 
-class SpreadshitInitialState extends SpreadshitState {}
+class SpreadsheetInitialState extends SpreadsheetState {}
 
-class SpreadshitLoadingState extends SpreadshitState {}
+class SpreadsheetLoadingState extends SpreadsheetState {}
 
-class SpreadshitLoadedState extends SpreadshitState {
+class SpreadsheetLoadedState extends SpreadsheetState {
   final List<AggregatedWordModel> words;
 
-  SpreadshitLoadedState(this.words);
+  SpreadsheetLoadedState(this.words);
 }
 
-class SpreadshitFailureState extends SpreadshitState {
+class SpreadsheetFailureState extends SpreadsheetState {
   final String error;
 
-  SpreadshitFailureState(this.error);
+  SpreadsheetFailureState(this.error);
 }
 
 // 🎯 Bloc для загрузки данных
-class SpreadshitBloc extends Bloc<SpreadshitEvent, SpreadshitState> {
-  SpreadshitBloc() : super(SpreadshitInitialState()) {
-    on<SpreadshitLoadEvent>(_onLoad);
+class SpreadsheetBloc extends Bloc<SpreadsheetEvent, SpreadsheetState> {
+  SpreadsheetBloc() : super(SpreadsheetInitialState()) {
+    on<SpreadsheetLoadEvent>(_onLoad);
 
-    add(SpreadshitLoadEvent()); // Загружаем данные при запуске
+    add(SpreadsheetLoadEvent()); // Загружаем данные при запуске
   }
 
   /// 📌 Метод загрузки данных из таблицы
   Future<void> _onLoad(
-      SpreadshitLoadEvent event, Emitter<SpreadshitState> emit) async {
-    emit(SpreadshitLoadingState());
+      SpreadsheetLoadEvent event, Emitter<SpreadsheetState> emit) async {
+    emit(SpreadsheetLoadingState());
 
     try {
       final alt = await (database.select(database.alternationItems)).get();
@@ -67,21 +70,13 @@ class SpreadshitBloc extends Bloc<SpreadshitEvent, SpreadshitState> {
           info: altItem,
         );
       }).toList();
-      emit(SpreadshitLoadedState(aggregatedList));
+      emit(SpreadsheetLoadedState(aggregatedList));
     } catch (e, s) {
       debugPrint('Ошибка загрузки данных: $e');
       debugPrintStack(stackTrace: s);
-      emit(SpreadshitFailureState(e.toString()));
+      emit(SpreadsheetFailureState(e.toString()));
     }
   }
 }
 
-class AggregatedWordModel {
-  final WordModel wordModel;
-  final Alternation? info;
 
-  AggregatedWordModel({
-    required this.wordModel,
-    required this.info,
-  });
-}

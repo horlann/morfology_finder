@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:flutter_web_worker_example/features/spreadsheet/bloc/sp_bl.dart';
+import 'package:flutter_web_worker_example/features/spreadsheet/data/models/aggregated_word.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
 import 'package:flutter_web_worker_example/main.dart';
 

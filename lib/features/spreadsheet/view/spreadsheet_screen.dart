@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_web_worker_example/features/spreadsheet/bloc/sp_bl.dart';
+import 'package:flutter_web_worker_example/features/spreadsheet/data/models/aggregated_word.dart';
 import 'package:flutter_web_worker_example/ui/widgets/custom_back_button.dart';
 
 @RoutePage()
@@ -145,16 +146,16 @@ class _WordTableScreenState extends State<WordTableScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => SpreadshitBloc(),
+      create: (BuildContext context) => SpreadsheetBloc(),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: BlocBuilder<SpreadshitBloc, SpreadshitState>(
+        body: BlocBuilder<SpreadsheetBloc, SpreadsheetState>(
           builder: (context, state) {
-            if (state is SpreadshitLoadingState) {
+            if (state is SpreadsheetLoadingState) {
               return Center(child: CircularProgressIndicator());
-            } else if (state is SpreadshitFailureState) {
+            } else if (state is SpreadsheetFailureState) {
               return Center(child: Text('Ошибка: ${state.error}'));
-            } else if (state is SpreadshitLoadedState) {
+            } else if (state is SpreadsheetLoadedState) {
               final words = state.words;
 
               return SingleChildScrollView(
