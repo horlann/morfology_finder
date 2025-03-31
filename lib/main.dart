@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,29 +10,24 @@ import 'morphology_app.dart';
 import 'src/platform/platform.dart';
 
 late Database database;
+final stopwatch = Stopwatch();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MorphologyApp());
+  stopwatch.start();
   database = Database(Platform.createDatabaseConnection('sample'));
   loadJsonAndInsert(database);
   loadJsonAndInsert2(database);
 }
 
-ndInsert(Database db) async {
+Future<void> loadJsonAndInsert(Database db) async {
   final jsonString = await rootBundle.loadString('assets/data/word.json');
-  final List<dynamic> jsonList = json.decode(jsonString);
+  final words = await compute(parseWords, jsonString);
 
-  for (var item in jsonList) {
-    final row = Word(
-      id: item['id'],
-      basic_word: item['basic_word'],
-      split_word: item['split_word'], idPr: item['id'],
-      // Add other fields here...
-    );
-
-    await db.into(db.wordItems).insertOnConflictUpdate(row);
-  }
+  await db.batch((batch) {
+    batch.insertAll(db.wordItems, words, mode: InsertMode.insertOrReplace);
+  });
 
   print('✅ Data inserted into Drift DB');
 }
@@ -38,21 +35,40 @@ ndInsert(Database db) async {
 Future<void> loadJsonAndInsert2(Database db) async {
   final jsonString =
       await rootBundle.loadString('assets/data/alternation.json');
-  final List<dynamic> jsonList = json.decode(jsonString);
+  final alternations = await compute(parseAlternations, jsonString);
 
-  for (var item in jsonList) {
-    final row = Alternation(
-      id: item['id'],
-      idPr: item['id'],
-      wordId: item['word_id'],
-      morphology_process: item['morphology_process'],
-      explanation: item['explanation'],
-      meaning: item['meaning'],
-      // Add other fields here...
-    );
-
-    await db.into(db.alternationItems).insertOnConflictUpdate(row);
-  }
+  await db.batch((batch) {
+    batch.insertAll(db.alternationItems, alternations,
+        mode: InsertMode.insertOrReplace);
+  });
+  stopwatch.stop();
+  print('✅ Data batch-inserted in ${stopwatch.elapsedMilliseconds} ms');
 
   print('✅ Data inserted into Drift DB2');
+}
+
+Future<List<Word>> parseWords(String jsonString) async {
+  final List<dynamic> jsonList = json.decode(jsonString);
+  return jsonList
+      .map((item) => Word(
+            id: item['id'],
+            basic_word: item['basic_word'],
+            split_word: item['split_word'],
+            idPr: item['id'],
+          ))
+      .toList();
+}
+
+Future<List<Alternation>> parseAlternations(String jsonString) async {
+  final List<dynamic> jsonList = json.decode(jsonString);
+  return jsonList
+      .map((item) => Alternation(
+            id: item['id'],
+            idPr: item['id'],
+            wordId: item['word_id'],
+            morphology_process: item['morphology_process'],
+            explanation: item['explanation'],
+            meaning: item['meaning'],
+          ))
+      .toList();
 }
