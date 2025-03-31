@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: tabWidth * 3,
                       child: TabBar(
                         isScrollable: false,
-                        indicatorColor: Colors.white,
+                        indicatorColor: Colors.black,
                         indicatorWeight: 3,
                         labelPadding: EdgeInsets.zero,
                         tabs: [
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: GoogleFonts.roboto(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF4A515C),
                                 ),
                               ),
                             ),
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: GoogleFonts.roboto(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF4A515C),
                                 ),
                               ),
                             ),
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: GoogleFonts.roboto(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF4A515C),
                                 ),
                               ),
                             ),

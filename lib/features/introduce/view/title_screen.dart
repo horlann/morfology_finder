@@ -28,11 +28,11 @@ class TitleScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Л. М. Полюга',
-                style: GoogleFonts.merriweather(
-                  fontSize: screenWidth > 600 ? 36 : 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                'Л. М. ПОЛЮГА',
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: screenWidth > 600 ? 36 : 24,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF000000),
                 ),
               ),
               const SizedBox(height: 20),

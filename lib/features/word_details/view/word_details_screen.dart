@@ -76,7 +76,6 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                     ),
                   ),
                 );
-
                 textSpans.add(
                   TextSpan(
                     text: '- ${secondPart[i]}\n',
@@ -206,11 +205,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                           vertical: screenHeight * 0.02,
                         ),
                         side: BorderSide(
-                          color: Colors.white,
+                          color: Color(0xFF4A515C),
                           width: 2,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Text(
@@ -219,8 +218,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                         style: GoogleFonts.roboto(
                           fontSize: screenWidth > 600 ? 20 : 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Color(0xFF362A2C),
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
                       ),
                     ),
                   ),

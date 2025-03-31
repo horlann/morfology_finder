@@ -23,13 +23,17 @@ class SpreadsheetLoadingState extends SpreadsheetState {}
 class SpreadsheetLoadedState extends SpreadsheetState {
   final List<AggregatedWordModel> words;
 
-  SpreadsheetLoadedState(this.words);
+  SpreadsheetLoadedState(
+    this.words,
+  );
 }
 
 class SpreadsheetFailureState extends SpreadsheetState {
   final String error;
 
-  SpreadsheetFailureState(this.error);
+  SpreadsheetFailureState(
+    this.error,
+  );
 }
 
 // 🎯 Bloc для загрузки данных
@@ -78,5 +82,3 @@ class SpreadsheetBloc extends Bloc<SpreadsheetEvent, SpreadsheetState> {
     }
   }
 }
-
-

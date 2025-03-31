@@ -31,7 +31,7 @@ class _HoverButtonState extends State<CustomBackButton> {
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: Colors.white,
+              color: Color(0xFF4A515C),
               width: 2,
             ),
           ),
@@ -41,7 +41,7 @@ class _HoverButtonState extends State<CustomBackButton> {
               padding: const EdgeInsets.only(left: 8),
               child: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+                color: Color(0xFF4A515C),
               ),
             ),
           ),

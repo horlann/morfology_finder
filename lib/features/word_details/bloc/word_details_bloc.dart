@@ -28,11 +28,14 @@ class WordDetailsBloc extends Bloc<WordDetailsEvent, WordDetailsState> {
               .get())
           .firstOrNull;
 
-      emit(WordDetailsLoadedState(
-          AggregatedWordModel(wordModel: wordModel, info: info)));
-
-
-
+      emit(
+        WordDetailsLoadedState(
+          AggregatedWordModel(
+            wordModel: wordModel,
+            info: info,
+          ),
+        ),
+      );
     } catch (e, s) {
       debugPrint('Ошибка при загрузке морфологии: $e');
       debugPrintStack(stackTrace: s);
