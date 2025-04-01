@@ -1,24 +1,31 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
 
+import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'core/db/db.dart';
-import 'morphology_app.dart';
-import 'src/platform/platform.dart';
+import 'package:flutter_web_worker_example/core/db/db.dart';
+import 'package:flutter_web_worker_example/services/app_loading_indicator.dart';
+import 'package:flutter_web_worker_example/src/platform/platform.dart';
 
 late Database database;
 final stopwatch = Stopwatch();
+final ValueNotifier<bool> isLoadingNotifier = ValueNotifier(false);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MorphologyApp());
+  runApp(const AppLoadingIndicator());
   stopwatch.start();
   database = Database(Platform.createDatabaseConnection('sample'));
-  loadJsonAndInsert(database);
-  loadJsonAndInsert2(database);
+  _initializeDatabase();
+}
+
+Future<void> _initializeDatabase() async {
+  isLoadingNotifier.value = true;
+  await loadJsonAndInsert(database);
+  await loadJsonAndInsert2(database);
+  isLoadingNotifier.value = false;
 }
 
 Future<void> loadJsonAndInsert(Database db) async {
@@ -29,7 +36,7 @@ Future<void> loadJsonAndInsert(Database db) async {
     batch.insertAll(db.wordItems, words, mode: InsertMode.insertOrReplace);
   });
 
-  print('✅ Data inserted into Drift DB');
+  debugPrint('✅ Data inserted into Drift DB');
 }
 
 Future<void> loadJsonAndInsert2(Database db) async {
@@ -42,9 +49,9 @@ Future<void> loadJsonAndInsert2(Database db) async {
         mode: InsertMode.insertOrReplace);
   });
   stopwatch.stop();
-  print('✅ Data batch-inserted in ${stopwatch.elapsedMilliseconds} ms');
+  debugPrint('✅ Data batch-inserted in ${stopwatch.elapsedMilliseconds} ms');
 
-  print('✅ Data inserted into Drift DB2');
+  debugPrint('✅ Data inserted into Drift DB2');
 }
 
 Future<List<Word>> parseWords(String jsonString) async {

@@ -232,8 +232,8 @@ class _WordTableScreenState extends State<WordTableScreen> {
                           // DataColumn(label: Text('Type')),
                         ],
                         source: _WordDataTableSource(words),
-                        rowsPerPage: 10,
                         // Количество строк на странице
+                        rowsPerPage: 10,
                         horizontalMargin: 16,
                         headingRowColor: WidgetStateProperty.all(Colors.white),
                         arrowHeadColor: Colors.black,
@@ -244,8 +244,9 @@ class _WordTableScreenState extends State<WordTableScreen> {
               ),
             );
           }
-
-          return Center(child: Text('Нема даних'));
+          return Center(
+            child: Text('Немає даних'),
+          );
         },
       ),
     );
