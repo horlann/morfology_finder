@@ -39,7 +39,7 @@ class AppLoadingIndicator extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          "Завантаження...",
+                          'Завантаження...',
                           style: TextStyle(
                             color: Colors.white,
                           ),
