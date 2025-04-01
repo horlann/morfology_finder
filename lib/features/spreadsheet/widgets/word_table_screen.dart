@@ -104,11 +104,11 @@ class _WordTableScreenState extends State<WordTableScreen> {
                       padding: EdgeInsets.zero,
                       child: PaginatedDataTable(
                         columns: [
-                          DataColumn(label: Text('ID')),
-                          DataColumn(label: Text('Word ID')),
-                          DataColumn(label: Text('Morphology Process')),
-                          DataColumn(label: Text('Meaning')),
-                          DataColumn(label: Text('Explanation')),
+                          DataColumn(label: Text('id')),
+                          DataColumn(label: Text('basic_word')),
+                          DataColumn(label: Text('split_word')),
+                          DataColumn(label: Text('morphology_process')),
+                          DataColumn(label: Text('explanation')),
                           // DataColumn(label: Text('Type')),
                         ],
                         source: _WordDataTableSource(words),
