@@ -33,6 +33,8 @@ class _WordTableScreenState extends State<WordTableScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tableHeaderStyle = TextStyle(fontWeight: FontWeight.w800);
+
     return Container(
       color: Colors.white,
       child: BlocBuilder<SpreadsheetBloc, SpreadsheetState>(
@@ -104,11 +106,36 @@ class _WordTableScreenState extends State<WordTableScreen> {
                       padding: EdgeInsets.zero,
                       child: PaginatedDataTable(
                         columns: [
-                          DataColumn(label: Text('id')),
-                          DataColumn(label: Text('basic_word')),
-                          DataColumn(label: Text('split_word')),
-                          DataColumn(label: Text('morphology_process')),
-                          DataColumn(label: Text('explanation')),
+                          DataColumn(
+                            label: Text(
+                              'id',
+                              style: tableHeaderStyle,
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'basic_word',
+                              style: tableHeaderStyle,
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'split_word',
+                              style: tableHeaderStyle,
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'morphology_process',
+                              style: tableHeaderStyle,
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'explanation',
+                              style: TextStyle(fontWeight: FontWeight.w800),
+                            ),
+                          ),
                           // DataColumn(label: Text('Type')),
                         ],
                         source: _WordDataTableSource(words),
