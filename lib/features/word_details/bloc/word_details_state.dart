@@ -16,7 +16,7 @@ class WordDetailsLoadingState extends WordDetailsState {
 class WordDetailsLoadedState extends WordDetailsState {
   WordDetailsLoadedState(this.wordModel);
 
-  final AggregatedWordModel wordModel;
+  final SpreadsheetModel wordModel;
 
 
   @override
