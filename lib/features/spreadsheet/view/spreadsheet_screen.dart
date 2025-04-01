@@ -85,7 +85,7 @@ class _SpreadsheetScreenState extends State<SpreadsheetScreen> {
             if (widget.showBackButton)
               Positioned(
                 left: screenWidth * 0.08,
-                top: screenHeight * 0.025,
+                top: 38,
                 child: CustomBackButton(),
               ),
             if (!widget.showBackButton)

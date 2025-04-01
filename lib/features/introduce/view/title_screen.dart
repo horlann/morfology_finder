@@ -30,7 +30,7 @@ class TitleScreen extends StatelessWidget {
               Text(
                 'Л. М. ПОЛЮГА',
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: screenWidth > 600 ? 36 : 24,
+                  fontSize: 24,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF000000),
                 ),

@@ -103,7 +103,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   ),
                   Positioned(
                     left: screenWidth * 0.08,
-                    top: screenHeight * 0.025,
+                    top: 38,
                     child: CustomBackButton(),
                   ),
                   Align(
@@ -117,7 +117,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                       ),
                       child: Container(
                         width: screenWidth * 0.84,
-                        height: screenHeight * 0.60,
+                        height: screenHeight * 0.52,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.02,
                           vertical: screenHeight * 0.04,
@@ -131,73 +131,71 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                             horizontal: 20,
                             vertical: 20,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(height: 40),
-                              Text(
-                                widget.wordModel.wordSplitWord ??
-                                    'Цього слова в базі даних немає',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 25),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      if (firstPart.isNotEmpty) ...textSpans,
-                                      if (firstPart.isEmpty)
-                                        TextSpan(
-                                          text:
-                                              "Морфонологічного пояснення немає",
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      if (thirdPart != null &&
-                                          thirdPart.isNotEmpty) ...[
-                                        TextSpan(
-                                          text: '\nПояснювальна ремарка - ',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: thirdPart,
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.normal,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  widget.wordModel.wordSplitWord ??
+                                      'Цього слова в базі даних немає',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 25),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        if (firstPart.isNotEmpty) ...textSpans,
+                                        if (firstPart.isEmpty)
+                                          TextSpan(
+                                            text:
+                                                "Морфонологічного пояснення немає",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        if (thirdPart != null &&
+                                            thirdPart.isNotEmpty) ...[
+                                          TextSpan(
+                                            text: '\nПояснювальна ремарка - ',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: thirdPart,
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.normal,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    left: screenWidth * 0.36,
-                    right: screenWidth * 0.36,
-                    bottom: screenHeight * 0.12,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: screenWidth * 0.32, // Уменьшил ширину кнопки
-                      ),
+                    left: 0,
+                    right: 0,
+                    bottom: screenHeight * 0.1,
+                    child: Center(
                       child: OutlinedButton(
                         onPressed: () {
                           context.router
@@ -205,11 +203,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                         },
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.04,
-                            vertical: screenHeight * 0.02,
+                            horizontal: 40,
+                            vertical: 20,
                           ),
                           side: BorderSide(
-                            color: Color(0xFF4A515C),
+                            color: Color(0xFF362A2C),
                             width: 2,
                           ),
                           shape: RoundedRectangleBorder(

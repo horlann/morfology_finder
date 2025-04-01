@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: tabWidth * 3,
                       child: TabBar(
                         isScrollable: false,
-                        indicatorColor: Colors.black,
+                        indicatorColor: Color(0xFF4A515C),
                         indicatorWeight: 3,
                         labelPadding: EdgeInsets.zero,
                         tabs: [
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Positioned(
                     left: screenWidth * 0.08,
-                    top: screenHeight * 0.025,
+                    top: 38,
                     child: CustomBackButton(),
                   ),
                 ],

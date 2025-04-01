@@ -43,7 +43,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.blue.shade100, Colors.pink.shade100],
+                  colors: [Color(0xFFB3D9FF), Color(0xFFF8AFC3)],
                 ),
               ),
             ),
@@ -67,34 +67,41 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                   ),
                   child: Column(
                     children: [
-                      Builder(builder: (context) {
-                        return TextField(
-                          controller: _searchController,
-                          onChanged: (text) => context
-                              .read<WordBloc>()
-                              .add(WordTextChangeEvent(text)),
-                          decoration: InputDecoration(
-                            labelText: 'Пошук слова',
-                            labelStyle: TextStyle(
-                              color: Colors.black.withAlpha(100),
-                              fontSize: 16,
+                      SizedBox(
+                        height: 38,
+                        child: Builder(builder: (context) {
+                          return TextField(
+                            controller: _searchController,
+                            onChanged: (text) => context
+                                .read<WordBloc>()
+                                .add(WordTextChangeEvent(text)),
+                            cursorHeight: 0,
+                            cursorColor: Colors.white,
+                            decoration: InputDecoration(
+                              // isCollapsed: true,
+                              isDense: true,
+                              labelText: 'Пошук слова',
+                              labelStyle: TextStyle(
+                                color: Colors.black.withAlpha(100),
+                                fontSize: 16,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 1),
+                              ),
+                              suffixIcon: IconButton(
+                                icon: const Icon(Icons.search),
+                                onPressed: () {},
+                              ),
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide:
-                                  const BorderSide(color: Colors.grey, width: 1),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.search),
-                              onPressed: () {},
-                            ),
-                          ),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                      ),
                       const SizedBox(height: 20),
                       Expanded(
                         child: BlocBuilder<WordBloc, WordState>(
