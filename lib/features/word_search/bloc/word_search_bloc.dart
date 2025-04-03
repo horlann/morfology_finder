@@ -1,77 +1,79 @@
-import 'package:drift/drift.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
-import 'package:flutter_web_worker_example/features/word_search/data/repositories/word_repository.dart';
+import 'package:equatable/equatable.dart';
+import 'package:drift/drift.dart';
+
 import 'package:flutter_web_worker_example/main.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
 
-part 'word_event.dart';
-part 'word_state.dart';
+part 'word_search_event.dart';
 
-class WordBloc extends Bloc<WordEvent, WordState> {
-  final WordRepository _wordRepository;
+part 'word_search_state.dart';
+
+class WordSearchBloc extends Bloc<WordSearchEvent, WordSearchState> {
+  // final WordRepository _wordRepository;
   final int _pageSize = 20; // Количество слов на странице
   int _currentPage = 0; // Текущая страница
   bool _isLoadingMore = false; // Флаг загрузки
-  String _currentQuery = ""; // Текущий поисковый запрос
+  String _currentQuery = ''; // Текущий поисковый запрос
 
-  WordBloc(this._wordRepository) : super(WordInitialState()) {
-    on<WordInitEvent>(_onInit);
-    on<WordTextChangeEvent>(_onTextChange);
-    on<WordSelectEvent>(_onWordSelect);
-    on<WordLoadMoreEvent>(_onLoadMore);
+  WordSearchBloc() : super(WordInitialState()) {
+    on<WordSearchInitEvent>(_onInit);
+    on<WordSearchTextChangeEvent>(_onTextChange);
+    on<WordSearchSelectEvent>(_onWordSelect);
+    on<WordSearchLoadMoreEvent>(_onLoadMore);
 
-    add(WordInitEvent());
+    add(WordSearchInitEvent());
   }
 
   /// 📌 Метод инициализации (загрузка первой страницы)
-  Future<void> _onInit(WordInitEvent event, Emitter<WordState> emit) async {
+  Future<void> _onInit(WordSearchInitEvent event, Emitter<WordSearchState> emit) async {
     try {
       _currentPage = 0;
       _currentQuery = ""; // Очистить поисковой запрос
 
-      final allWords = await _fetchWords(page: _currentPage, query: "");
+      final allWords = await _fetchWords(page: _currentPage, query: '');
 
-      emit(WordLoadedState(allWords));
+      emit(WordSearchLoadedState(allWords));
     } catch (e, s) {
       debugPrint('Error loading words (init bloc): $e');
       debugPrintStack(stackTrace: s);
-      emit(WordFailureState(e.toString()));
+      emit(WordSearchFailureState(e.toString()));
     }
   }
 
   /// 📌 Метод поиска по слову
   Future<void> _onTextChange(
-      WordTextChangeEvent event, Emitter<WordState> emit) async {
+      WordSearchTextChangeEvent event, Emitter<WordSearchState> emit) async {
     debugPrint('Word Search Text Change Event: ${event.query}');
 
     _currentQuery = event.query.trim();
     _currentPage = 0; // Сбросить страницу при новом поиске
 
     if (_currentQuery.isEmpty) {
-      add(WordInitEvent()); // Если строка пустая — загрузить стандартные данные
+      add(WordSearchInitEvent()); // Если строка пустая — загрузить стандартные данные
       return;
     }
 
-    emit(WordLoadingState());
+    emit(WordSearchLoadingState());
 
     try {
       final searchResults =
           await _fetchWords(page: _currentPage, query: _currentQuery);
 
-      emit(WordLoadedState(searchResults));
+      emit(WordSearchLoadedState(searchResults));
     } catch (e, s) {
       debugPrint('Error during search: $e');
       debugPrintStack(stackTrace: s);
-      emit(WordFailureState(e.toString()));
+      emit(WordSearchFailureState(e.toString()));
     }
   }
 
   /// 📌 Метод подгрузки следующей страницы
   Future<void> _onLoadMore(
-      WordLoadMoreEvent event, Emitter<WordState> emit) async {
-    if (_isLoadingMore || state is! WordLoadedState) return;
+      WordSearchLoadMoreEvent event, Emitter<WordSearchState> emit) async {
+    if (_isLoadingMore || state is! WordSearchLoadedState) return;
 
     _isLoadingMore = true;
     debugPrint('Loading more words...');
@@ -87,11 +89,11 @@ class WordBloc extends Bloc<WordEvent, WordState> {
         return;
       }
 
-      final currentState = state as WordLoadedState;
+      final currentState = state as WordSearchLoadedState;
       final updatedWordList = List<WordModel>.from(currentState.words)
         ..addAll(moreWords);
 
-      emit(WordLoadedState(updatedWordList));
+      emit(WordSearchLoadedState(updatedWordList));
     } catch (e, s) {
       debugPrint('Error loading more words: $e');
       debugPrintStack(stackTrace: s);
@@ -102,7 +104,7 @@ class WordBloc extends Bloc<WordEvent, WordState> {
 
   /// 📌 Метод выбора слова
   Future<void> _onWordSelect(
-      WordSelectEvent event, Emitter<WordState> emit) async {}
+      WordSearchSelectEvent event, Emitter<WordSearchState> emit) async {}
 
   /// 📌 Метод получения слов (пагинация + поиск)
   Future<List<WordModel>> _fetchWords(

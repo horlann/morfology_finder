@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_web_worker_example/ui/widgets/custom_back_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_web_worker_example/features/main/view/main_screen.dart';
@@ -19,9 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    debugPrint(screenWidth.toString());
     final screenHeight = MediaQuery.sizeOf(context).height;
-    debugPrint(screenHeight.toString());
     final tabWidth = screenWidth * 0.12;
 
     return Scaffold(
@@ -31,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: screenWidth,
         height: screenHeight,
         decoration: BoxDecoration(
-          color: Colors.blue.shade100,
+          color: Color(0xFFB3D9FF),
         ),
         child: DefaultTabController(
           length: 3,
@@ -40,15 +39,18 @@ class _HomeScreenState extends State<HomeScreen> {
               Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: (screenWidth - tabWidth * 3) / 2,
+                    padding: EdgeInsets.only(
+                      left: (screenWidth - tabWidth * 3) / 2,
+                      top: 24,
+                      right: (screenWidth - tabWidth * 3) / 2,
+                      bottom: 0,
                     ),
                     child: SizedBox(
-                      height: screenHeight * 0.08,
+                      height: 72,
                       width: tabWidth * 3,
                       child: TabBar(
                         isScrollable: false,
-                        indicatorColor: Colors.white,
+                        indicatorColor: Color(0xFF4A515C),
                         indicatorWeight: 3,
                         labelPadding: EdgeInsets.zero,
                         tabs: [
@@ -58,9 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'Головна',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF4A515C),
                                 ),
                               ),
                             ),
@@ -71,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'Пошук',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF4A515C),
                                 ),
                               ),
                             ),
@@ -84,9 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'Таблиця',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF4A515C),
                                 ),
                               ),
                             ),
@@ -96,34 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned(
-                    left: screenWidth * 0.12,
-                    top: screenHeight * 0.025,
-                    child: GestureDetector(
-                      onTap: () {
-                        context.router.maybePop();
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2,
-                          ),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    left: screenWidth * 0.08,
+                    top: 38,
+                    child: CustomBackButton(),
                   ),
                 ],
               ),

@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.blue.shade100, Colors.pink.shade100],
+                colors: [Color(0xFFB3D9FF), Color(0xFFF8AFC3)],
               ),
             ),
           ),
@@ -35,23 +35,24 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    top: 20,
-                    right: 40,
-                    bottom: 20,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04,
+                    vertical: screenHeight * 0.04,
                   ),
-                  child: IntrinsicHeight(
-                    child: Container(
-                      width: screenWidth * 0.9,
-                      height: screenHeight * 0.8,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
+                  child: Container(
+                    width: screenWidth * 0.84,
+                    height: screenHeight * 0.72,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.02,
+                      vertical: screenHeight * 0.04,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''також працює над проєктом його електронної версії, '''
                               '''що сприятиме подальшому розвитку цифрової лексикографії.''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -93,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''методики й програмного забезпечення для автоматичної '''
                               '''конверсії "Словника українських морфем" у цифровий формат.''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -110,7 +111,7 @@ class _MainScreenState extends State<MainScreen> {
                                     text:
                                         '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0Мета дослідження ',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       height: 2,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -120,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
                                         'полягає у створенні електронної версії "Словника українських морфем" '
                                         'Л.М. Полюги з акцентом на морфонологічні процеси.',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       height: 2,
                                     ),
                                   ),
@@ -135,7 +136,7 @@ class _MainScreenState extends State<MainScreen> {
                             Text(
                               '''\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\Завдання дослідження: ''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 fontWeight: FontWeight.bold,
                                 textBaseline: TextBaseline.alphabetic,
@@ -150,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\➢ '''
                               '''дослідити історію розвитку комп’ютерної лексикографії; ''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -164,7 +165,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\➢ '''
                               '''визначити актуальність комп’ютерної лексикографії, описати її завдання та проблеми;''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -178,7 +179,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\➢ '''
                               '''розробити концепції інфологічної та даталогічної моделі лексикографічної бази даних;''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -192,7 +193,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\➢ '''
                               '''описати призначення словника та вихідні дані для його розробки;''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -206,7 +207,7 @@ class _MainScreenState extends State<MainScreen> {
                               '''\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\➢ '''
                               '''обрати програмний інструментарій для конвертації словника;''',
                               style: GoogleFonts.roboto(
-                                fontSize: 20,
+                                fontSize: 18,
                                 height: 2,
                                 textBaseline: TextBaseline.alphabetic,
                               ),
@@ -216,7 +217,6 @@ class _MainScreenState extends State<MainScreen> {
                                 height: 2.5,
                               ),
                             ),
-                            const SizedBox(height: 20),
                           ],
                         ),
                       ),

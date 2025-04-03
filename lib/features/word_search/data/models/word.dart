@@ -1,5 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
 class WordModel {
   WordModel({
     required this.wordId,
@@ -15,6 +13,8 @@ class WordModel {
 
   @override
   String toString() {
-    return 'WordModel{wordId: $wordId, wordBasicWord: $wordBasicWord, wordSplitWord: $wordSplitWord}';
+    return 'WordModel{wordId: $wordId, '
+        'wordBasicWord: $wordBasicWord, '
+        'wordSplitWord: $wordSplitWord}';
   }
 }

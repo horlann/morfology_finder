@@ -27,17 +27,17 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [IntroduceScreen]
-class IntroduceRoute extends PageRouteInfo<void> {
-  const IntroduceRoute({List<PageRouteInfo>? children})
-    : super(IntroduceRoute.name, initialChildren: children);
+/// [TitleScreen]
+class TitleRoute extends PageRouteInfo<void> {
+  const TitleRoute({List<PageRouteInfo>? children})
+    : super(TitleRoute.name, initialChildren: children);
 
   static const String name = 'IntroduceRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const IntroduceScreen();
+      return const TitleScreen();
     },
   );
 }
@@ -105,11 +105,11 @@ class SpreadsheetRouteArgs {
 class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
   WordDetailsRoute({
     Key? key,
-    required WordModel word,
+    required WordModel wordModel,
     List<PageRouteInfo>? children,
   }) : super(
          WordDetailsRoute.name,
-         args: WordDetailsRouteArgs(key: key, word: word),
+         args: WordDetailsRouteArgs(key: key, wordModel: wordModel),
          initialChildren: children,
        );
 
@@ -119,21 +119,21 @@ class WordDetailsRoute extends PageRouteInfo<WordDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<WordDetailsRouteArgs>();
-      return WordDetailsScreen(key: args.key, word: args.word);
+      return WordDetailsScreen(key: args.key, wordModel: args.wordModel);
     },
   );
 }
 
 class WordDetailsRouteArgs {
-  const WordDetailsRouteArgs({this.key, required this.word});
+  const WordDetailsRouteArgs({this.key, required this.wordModel});
 
   final Key? key;
 
-  final WordModel word;
+  final WordModel wordModel;
 
   @override
   String toString() {
-    return 'WordDetailsRouteArgs{key: $key, word: $word}';
+    return 'WordDetailsRouteArgs{key: $key, wordModel: $wordModel}';
   }
 }
 

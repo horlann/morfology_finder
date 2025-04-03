@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_web_worker_example/core/db/db.dart';
-import 'package:flutter_web_worker_example/core/router/router.dart';
-import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:flutter_web_worker_example/core/router/router.dart';
+import 'package:flutter_web_worker_example/features/word_details/bloc/word_details_bloc.dart';
+import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
+import 'package:flutter_web_worker_example/ui/widgets/custom_back_button.dart';
 
 @RoutePage()
 class WordDetailsScreen extends StatefulWidget {
   const WordDetailsScreen({
     super.key,
-    required this.word,
+    required this.wordModel,
   });
 
-  final WordModel word;
+  final WordModel wordModel;
 
   @override
   State<WordDetailsScreen> createState() => _WordDetailsScreenState();
@@ -24,112 +27,214 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.blue.shade100, Colors.pink.shade100],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 200,
-            top: 20,
-            child: GestureDetector(
-              onTap: () {
-                context.router.maybePop();
-              },
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
+
+    return BlocProvider(
+      create: (context) =>
+          WordDetailsBloc(widget.wordModel)..add(WordDetailsSelectEvent()),
+      child: Scaffold(
+        body: BlocBuilder<WordDetailsBloc, WordDetailsState>(
+          builder: (context, state) {
+            if (state is WordDetailsLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is WordDetailsFailureState) {
+              return Center(child: Text('Ошибка: ${state.exception}'));
+            } else if (state is WordDetailsLoadedState) {
+              // handling morphologyProcess
+              final morphologyProcess =
+                  state.wordModel.info?.morphology_process;
+              final morphologyProcessNew = (morphologyProcess != null &&
+                      morphologyProcess.length > 2)
+                  ? morphologyProcess.substring(1, morphologyProcess.length - 1)
+                  : null;
+              List<String> firstPart = morphologyProcessNew?.split(", ") ?? [];
+
+              // handling explanation
+              final explanation = state.wordModel.info?.explanation;
+              List<String> secondPart = explanation?.split(";") ?? [];
+
+              // handling meaning
+              final meaning = state.wordModel.info?.meaning;
+              final meaningNew = (meaning != null &&
+                      meaning.startsWith('(') &&
+                      meaning.endsWith(')'))
+                  ? meaning.substring(1, meaning.length - 1)
+                  : meaning;
+              final thirdPart = meaningNew;
+
+              // handling TextRich
+              List<TextSpan> textSpans = [];
+              for (int i = 0;
+                  i < firstPart.length && i < secondPart.length;
+                  i++) {
+                textSpans.add(
+                  TextSpan(
+                    text: '(${firstPart[i]}) ',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.25,
-              vertical: screenHeight * 0.1,
-            ),
-            child: Container(
-              width: screenWidth * 0.9,
-              height: screenHeight * 0.75,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 120),
-                  Text(
-                    widget.word.wordSplitWord ?? "",
+                );
+                textSpans.add(
+                  TextSpan(
+                    text: '- ${secondPart[i]}\n',
                     style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.normal,
                       color: Colors.black,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+                textSpans.add(TextSpan(text: '\n'));
+              }
+              return Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFFB3D9FF), Color(0xFFF8AFC3)],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: screenWidth * 0.08,
+                    top: 38,
+                    child: CustomBackButton(),
+                  ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.32,
+                        top: (72 + 24) + screenHeight * 0.04,
+                        right: screenWidth * 0.32,
+                        bottom: screenHeight * 0.04,
+                      ),
+                      child: Container(
+                        width: screenWidth * 0.84,
+                        height: screenHeight * 0.52,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.04,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 20,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  widget.wordModel.wordSplitWord ??
+                                      'Цього слова в базі даних немає',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 25),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        if (firstPart.isNotEmpty) ...textSpans,
+                                        if (firstPart.isEmpty)
+                                          TextSpan(
+                                            text:
+                                                "Морфонологічного пояснення немає",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        if (thirdPart != null &&
+                                            thirdPart.isNotEmpty) ...[
+                                          TextSpan(
+                                            text: '\nПояснювальна ремарка - ',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: thirdPart,
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.normal,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: screenHeight * 0.1,
+                    child: Center(
+                      child: OutlinedButton(
+                        onPressed: () {
+                          context.router
+                              .push(SpreadsheetRoute(showBackButton: true));
+                        },
+                        style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 40,
+                            vertical: 20,
+                          ),
+                          side: BorderSide(
+                            color: Color(0xFF362A2C),
+                            width: 2,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Подивитися таблицю всіх слів \nз морфологічними процесами',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(
+                            fontSize: screenWidth > 600 ? 20 : 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF362A2C),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                        ),
+                      ),
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: screenHeight * 0.04,
-            left: screenWidth * 0.33,
-            right: screenWidth * 0.33,
-            child: OutlinedButton(
-              onPressed: () {
-                context.router.push(SpreadsheetRoute(showBackButton: true));
-              },
-              style: OutlinedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.04,
-                  vertical: screenHeight * 0.02,
-                ),
-                side: BorderSide(
-                  color: Colors.white,
-                  width: 2,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                'Подивитися таблицю всіх слів \nз морфологічними процесами',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.roboto(
-                  fontSize: screenWidth > 600 ? 20 : 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ],
+              );
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }
