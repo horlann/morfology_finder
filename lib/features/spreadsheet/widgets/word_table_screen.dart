@@ -40,7 +40,7 @@ class _WordTableScreenState extends State<WordTableScreen> {
           if (state is SpreadsheetLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is SpreadsheetFailureState) {
-            return Center(child: Text('Ошибка: ${state.error}'));
+            return Center(child: Text('Помилка: ${state.error}'));
           } else if (state is SpreadsheetLoadedState) {
             final words = state.words;
 
@@ -104,12 +104,12 @@ class _WordTableScreenState extends State<WordTableScreen> {
                       padding: EdgeInsets.zero,
                       child: PaginatedDataTable(
                         columns: [
-                          DataColumn(label: Text('ID')),
-                          DataColumn(label: Text('Word ID')),
-                          DataColumn(label: Text('Morphology Process')),
-                          DataColumn(label: Text('Meaning')),
-                          DataColumn(label: Text('Explanation')),
-                          // DataColumn(label: Text('Type')),
+                          DataColumn(label: Text('id')),
+                          DataColumn(label: Text('basic_word')),
+                          DataColumn(label: Text('split_word')),
+                          DataColumn(label: Text('morphology_process')),
+                          DataColumn(label: Text('meaning')),
+                          DataColumn(label: Text('explanation')),
                         ],
                         source: _WordDataTableSource(words),
                         // Количество строк на странице
@@ -165,6 +165,7 @@ class _WordDataTableSource extends DataTableSource {
         DataCell(Text(word.wordModel.wordBasicWord ?? "-")),
         DataCell(Text(word.wordModel.wordSplitWord ?? '-')),
         DataCell(Text(word.info?.morphology_process ?? '-')),
+        DataCell(Text(word.info?.meaning ?? '-')),
         DataCell(Text(word.info?.explanation ?? '-')),
         // DataCell(Text(word.$2.type ?? '-')),
       ],
