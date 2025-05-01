@@ -28,9 +28,9 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [TitleScreen]
-class IntroduceRoute extends PageRouteInfo<void> {
-  const IntroduceRoute({List<PageRouteInfo>? children})
-    : super(IntroduceRoute.name, initialChildren: children);
+class TitleRoute extends PageRouteInfo<void> {
+  const TitleRoute({List<PageRouteInfo>? children})
+    : super(TitleRoute.name, initialChildren: children);
 
   static const String name = 'IntroduceRoute';
 

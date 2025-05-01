@@ -1,8 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_web_worker_example/core/router/router.dart';
-import 'package:flutter_web_worker_example/features/word_search/bloc/word_bloc.dart';
+import 'package:flutter_web_worker_example/features/word_search/bloc/word_search_bloc.dart';
 import 'package:flutter_web_worker_example/features/word_search/data/models/word.dart';
 
 @RoutePage()
@@ -32,7 +34,7 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
     return BlocProvider(
-      create: (context) => WordBloc(),
+      create: (context) => WordSearchBloc(),
       child: Scaffold(
         body: Stack(
           children: [
@@ -73,8 +75,8 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                           return TextField(
                             controller: _searchController,
                             onChanged: (text) => context
-                                .read<WordBloc>()
-                                .add(WordTextChangeEvent(text)),
+                                .read<WordSearchBloc>()
+                                .add(WordSearchTextChangeEvent(text)),
                             cursorHeight: 0,
                             cursorColor: Colors.white,
                             decoration: InputDecoration(
@@ -88,7 +90,9 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: Colors.grey, width: 1),
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
                               ),
                               suffixIcon: IconButton(
                                 icon: const Icon(Icons.search),
@@ -104,9 +108,9 @@ class _WordSearchScreenState extends State<WordSearchScreen> with RouteAware {
                       ),
                       const SizedBox(height: 20),
                       Expanded(
-                        child: BlocBuilder<WordBloc, WordState>(
+                        child: BlocBuilder<WordSearchBloc, WordSearchState>(
                           builder: (context, state) {
-                            if (state is WordLoadedState) {
+                            if (state is WordSearchLoadedState) {
                               return _List(words: (state).words);
                             } else {
                               return _List(words: []);
@@ -139,13 +143,14 @@ class _List extends StatefulWidget {
 
 class _ListState extends State<_List> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        context.read<WordBloc>().add(WordLoadMoreEvent());
+        context.read<WordSearchBloc>().add(WordSearchLoadMoreEvent());
       }
     });
   }
@@ -156,7 +161,10 @@ class _ListState extends State<_List> {
       return Center(
         child: Text(
           'Немає результатів для вашого запиту.',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       );
     }
@@ -167,12 +175,12 @@ class _ListState extends State<_List> {
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            widget.words[index].wordBasicWord ?? "",
+            widget.words[index].wordBasicWord ?? '',
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () {
             final word = widget.words[index];
-            context.read<WordBloc>().add(WordSelectEvent(word));
+            context.read<WordSearchBloc>().add(WordSearchSelectEvent(word));
             context.router.push(WordDetailsRoute(wordModel: word));
           },
         );

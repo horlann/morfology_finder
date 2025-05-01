@@ -12,6 +12,7 @@ class TitleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
+
     return Scaffold(
       body: Center(
         child: Container(
@@ -79,7 +80,7 @@ class TitleScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: screenHeight * 0.04),
+              SizedBox(height: 60),
               ElevatedButton(
                 onPressed: () {
                   context.router.push(HomeRoute());
@@ -96,14 +97,14 @@ class TitleScreen extends StatelessWidget {
                   ),
                 ),
                 child: SizedBox(
-                  width: screenWidth * 0.2,
+                  width: 400,
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       'Натисни, щоб почати',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
-                        fontSize: screenWidth > 600 ? 20 : 16,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
